@@ -16,6 +16,6 @@ namespace FerryBookingClassLibrary.Models
         [Required]
         public int FerryId { get; set; }
 
-        public Ferry Ferry { get; set; }
+        public Ferry? Ferry { get; set; }
     }
 }

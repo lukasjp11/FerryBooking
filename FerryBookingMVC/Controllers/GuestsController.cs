@@ -10,12 +10,21 @@ using Microsoft.Extensions.Logging;
 
 namespace FerryBookingMVC.Controllers
 {
-    public class GuestsController(FerryContext context) : Controller
+    public class GuestsController : Controller
     {
+        private readonly FerryContext _context;
+        private readonly ILogger<GuestsController> _logger;
+
+        public GuestsController(FerryContext context, ILogger<GuestsController> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+
         // GET: Guests
         public async Task<IActionResult> Index()
         {
-            var guests = await context.Guests.ToListAsync();
+            var guests = await _context.Guests.ToListAsync();
             return View(guests);
         }
 
@@ -25,7 +34,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var guest = await context.Guests.FirstOrDefaultAsync(m => m.Id == id);
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
                 return NotFound();
 
@@ -35,7 +44,7 @@ namespace FerryBookingMVC.Controllers
         // GET: Guests/Create
         public IActionResult Create()
         {
-            var ferries = context.Ferries.ToList();
+            var ferries = _context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name");
             return View();
         }
@@ -45,13 +54,31 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Gender,FerryId")] Guest guest)
         {
+            _logger.LogInformation($"Received FerryId: {guest.FerryId}");
+
             if (ModelState.IsValid)
             {
-                context.Add(guest);
-                await context.SaveChangesAsync();
+                _logger.LogInformation("Model state is valid. Adding guest to context.");
+                _context.Add(guest);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Guest saved successfully. Redirecting to Index.");
                 return RedirectToAction(nameof(Index));
             }
-            var ferries = context.Ferries.ToList();
+            else
+            {
+                _logger.LogWarning("Model state is invalid. Returning to Create view.");
+                foreach (var key in ModelState.Keys)
+                {
+                    var state = ModelState[key];
+                    foreach (var error in state.Errors)
+                    {
+                        _logger.LogWarning($"Key: {key}, Error: {error.ErrorMessage}");
+                        Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                    }
+                }
+            }
+
+            var ferries = _context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
         }
@@ -62,11 +89,11 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var guest = await context.Guests.FindAsync(id);
+            var guest = await _context.Guests.FindAsync(id);
             if (guest == null)
                 return NotFound();
 
-            var ferries = context.Ferries.ToList();
+            var ferries = _context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
         }
@@ -83,8 +110,8 @@ namespace FerryBookingMVC.Controllers
             {
                 try
                 {
-                    context.Update(guest);
-                    await context.SaveChangesAsync();
+                    _context.Update(guest);
+                    await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -95,7 +122,7 @@ namespace FerryBookingMVC.Controllers
                 }
             }
 
-            var ferries = context.Ferries.ToList();
+            var ferries = _context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
         }
@@ -106,7 +133,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var guest = await context.Guests.FirstOrDefaultAsync(m => m.Id == id);
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
                 return NotFound();
 
@@ -118,15 +145,15 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var guest = await context.Guests.FindAsync(id);
+            var guest = await _context.Guests.FindAsync(id);
             if (guest != null)
             {
-                context.Guests.Remove(guest);
-                await context.SaveChangesAsync();
+                _context.Guests.Remove(guest);
+                await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GuestExists(int id) => context.Guests.Any(e => e.Id == id);
+        private bool GuestExists(int id) => _context.Guests.Any(e => e.Id == id);
     }
 }
