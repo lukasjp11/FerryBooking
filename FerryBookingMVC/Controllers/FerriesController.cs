@@ -6,21 +6,15 @@ using FerryBookingClassLibrary;
 using FerryBookingClassLibrary.Models;
 using FerryBookingMVC.Models;
 
+
 namespace FerryBookingMVC.Controllers
 {
-    public class FerriesController : Controller
+    public class FerriesController(FerryContext context) : Controller
     {
-        private readonly FerryContext _context;
-
-        public FerriesController(FerryContext context)
-        {
-            _context = context;
-        }
-
         // GET: Ferries
         public async Task<IActionResult> Index()
         {
-            var ferries = await _context.Ferries.ToListAsync();
+            var ferries = await context.Ferries.ToListAsync();
             return View(ferries);
         }
 
@@ -30,7 +24,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var ferry = await _context.Ferries
+            var ferry = await context.Ferries
                 .Include(f => f.Cars)
                 .ThenInclude(c => c.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -51,8 +45,8 @@ namespace FerryBookingMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ferry);
-                await _context.SaveChangesAsync();
+                context.Add(ferry);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(ferry);
@@ -64,7 +58,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var ferry = await _context.Ferries.FindAsync(id);
+            var ferry = await context.Ferries.FindAsync(id);
             if (ferry == null)
                 return NotFound();
 
@@ -83,8 +77,8 @@ namespace FerryBookingMVC.Controllers
             {
                 try
                 {
-                    _context.Update(ferry);
-                    await _context.SaveChangesAsync();
+                    context.Update(ferry);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -104,7 +98,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var ferry = await _context.Ferries.FirstOrDefaultAsync(m => m.Id == id);
+            var ferry = await context.Ferries.FirstOrDefaultAsync(m => m.Id == id);
             if (ferry == null)
                 return NotFound();
 
@@ -116,15 +110,15 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ferry = await _context.Ferries.FindAsync(id);
+            var ferry = await context.Ferries.FindAsync(id);
             if (ferry != null)
             {
-                _context.Ferries.Remove(ferry);
-                await _context.SaveChangesAsync();
+                context.Ferries.Remove(ferry);
+                await context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FerryExists(int id) => _context.Ferries.Any(e => e.Id == id);
+        private bool FerryExists(int id) => context.Ferries.Any(e => e.Id == id);
     }
 }

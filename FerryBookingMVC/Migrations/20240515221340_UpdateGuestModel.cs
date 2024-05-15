@@ -7,7 +7,7 @@
 namespace FerryBookingMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class UpdateGuestModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,10 +54,10 @@ namespace FerryBookingMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: false),
-                    CarId = table.Column<int>(type: "int", nullable: true),
-                    FerryId = table.Column<int>(type: "int", nullable: false)
+                    FerryId = table.Column<int>(type: "int", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,8 +66,7 @@ namespace FerryBookingMVC.Migrations
                         name: "FK_Guests_Cars_CarId",
                         column: x => x.CarId,
                         principalTable: "Cars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Guests_Ferries_FerryId",
                         column: x => x.FerryId,
@@ -81,8 +80,8 @@ namespace FerryBookingMVC.Migrations
                 columns: new[] { "Id", "MaxCars", "MaxGuests", "Name", "PricePerCar", "PricePerGuest" },
                 values: new object[,]
                 {
-                    { 1, 100, 50, "Ferry 1", 197m, 99m },
-                    { 2, 120, 60, "Ferry 2", 197m, 99m }
+                    { 1, 400, 980, "MOLSLINJEN (Express 4)", 249m, 149m },
+                    { 2, 50, 100, "Standard Ferry", 197m, 99m }
                 });
 
             migrationBuilder.InsertData(
@@ -101,16 +100,16 @@ namespace FerryBookingMVC.Migrations
                 columns: new[] { "Id", "CarId", "FerryId", "Gender", "Name" },
                 values: new object[,]
                 {
+                    { 1, null, 1, true, "Alice Smith" },
+                    { 2, null, 1, false, "Bob Johnson" },
+                    { 3, null, 1, false, "Charlie Brown" },
+                    { 4, null, 1, true, "Diana Prince" },
+                    { 5, null, 2, true, "Eve Davis" },
+                    { 6, null, 2, false, "Frank Miller" },
+                    { 7, null, 2, true, "Grace Lee" },
+                    { 8, null, 2, false, "Hank Green" },
                     { 9, null, 1, false, "Isaac Newton" },
-                    { 10, null, 1, true, "Marie Curie" },
-                    { 1, 1, 1, true, "Alice Smith" },
-                    { 2, 1, 1, false, "Bob Johnson" },
-                    { 3, 2, 1, false, "Charlie Brown" },
-                    { 4, 2, 1, true, "Diana Prince" },
-                    { 5, 3, 2, true, "Eve Davis" },
-                    { 6, 3, 2, false, "Frank Miller" },
-                    { 7, 4, 2, true, "Grace Lee" },
-                    { 8, 4, 2, false, "Hank Green" }
+                    { 10, null, 1, true, "Marie Curie" }
                 });
 
             migrationBuilder.CreateIndex(

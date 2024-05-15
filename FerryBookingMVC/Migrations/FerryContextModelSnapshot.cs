@@ -130,7 +130,8 @@ namespace FerryBookingMVC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -144,7 +145,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 1,
-                            CarId = 1,
                             FerryId = 1,
                             Gender = true,
                             Name = "Alice Smith"
@@ -152,7 +152,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 2,
-                            CarId = 1,
                             FerryId = 1,
                             Gender = false,
                             Name = "Bob Johnson"
@@ -160,7 +159,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 3,
-                            CarId = 2,
                             FerryId = 1,
                             Gender = false,
                             Name = "Charlie Brown"
@@ -168,7 +166,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 4,
-                            CarId = 2,
                             FerryId = 1,
                             Gender = true,
                             Name = "Diana Prince"
@@ -176,7 +173,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 5,
-                            CarId = 3,
                             FerryId = 2,
                             Gender = true,
                             Name = "Eve Davis"
@@ -184,7 +180,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 6,
-                            CarId = 3,
                             FerryId = 2,
                             Gender = false,
                             Name = "Frank Miller"
@@ -192,7 +187,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 7,
-                            CarId = 4,
                             FerryId = 2,
                             Gender = true,
                             Name = "Grace Lee"
@@ -200,7 +194,6 @@ namespace FerryBookingMVC.Migrations
                         new
                         {
                             Id = 8,
-                            CarId = 4,
                             FerryId = 2,
                             Gender = false,
                             Name = "Hank Green"
@@ -234,18 +227,15 @@ namespace FerryBookingMVC.Migrations
 
             modelBuilder.Entity("FerryBookingClassLibrary.Models.Guest", b =>
                 {
-                    b.HasOne("FerryBookingClassLibrary.Models.Car", "Car")
+                    b.HasOne("FerryBookingClassLibrary.Models.Car", null)
                         .WithMany("Guests")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CarId");
 
                     b.HasOne("FerryBookingClassLibrary.Models.Ferry", "Ferry")
                         .WithMany("Guests")
                         .HasForeignKey("FerryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Car");
 
                     b.Navigation("Ferry");
                 });

@@ -5,9 +5,7 @@ namespace FerryBookingMVC.Models
 {
     public class FerryContext : DbContext
     {
-        public FerryContext(DbContextOptions<FerryContext> options) : base(options)
-        {
-        }
+        public FerryContext(DbContextOptions<FerryContext> options) : base(options) { }
 
         public DbSet<Ferry> Ferries { get; set; }
         public DbSet<Car> Cars { get; set; }
@@ -27,12 +25,6 @@ namespace FerryBookingMVC.Models
                 .HasColumnType("decimal(18,2)");
 
             // Configure relationships
-            modelBuilder.Entity<Guest>()
-                .HasOne(g => g.Car)
-                .WithMany(c => c.Guests)
-                .HasForeignKey(g => g.CarId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<Guest>()
                 .HasOne(g => g.Ferry)
                 .WithMany(f => f.Guests)
@@ -75,16 +67,16 @@ namespace FerryBookingMVC.Models
             );
 
             modelBuilder.Entity<Guest>().HasData(
-                new Guest { Id = 1, Name = "Alice Smith", Gender = true, CarId = 1, FerryId = 1 },
-                new Guest { Id = 2, Name = "Bob Johnson", Gender = false, CarId = 1, FerryId = 1 },
-                new Guest { Id = 3, Name = "Charlie Brown", Gender = false, CarId = 2, FerryId = 1 },
-                new Guest { Id = 4, Name = "Diana Prince", Gender = true, CarId = 2, FerryId = 1 },
-                new Guest { Id = 5, Name = "Eve Davis", Gender = true, CarId = 3, FerryId = 2 },
-                new Guest { Id = 6, Name = "Frank Miller", Gender = false, CarId = 3, FerryId = 2 },
-                new Guest { Id = 7, Name = "Grace Lee", Gender = true, CarId = 4, FerryId = 2 },
-                new Guest { Id = 8, Name = "Hank Green", Gender = false, CarId = 4, FerryId = 2 },
-                new Guest { Id = 9, Name = "Isaac Newton", Gender = false, CarId = null, FerryId = 1 },
-                new Guest { Id = 10, Name = "Marie Curie", Gender = true, CarId = null, FerryId = 1 }
+                new Guest { Id = 1, Name = "Alice Smith", Gender = true, FerryId = 1 },
+                new Guest { Id = 2, Name = "Bob Johnson", Gender = false, FerryId = 1 },
+                new Guest { Id = 3, Name = "Charlie Brown", Gender = false, FerryId = 1 },
+                new Guest { Id = 4, Name = "Diana Prince", Gender = true, FerryId = 1 },
+                new Guest { Id = 5, Name = "Eve Davis", Gender = true, FerryId = 2 },
+                new Guest { Id = 6, Name = "Frank Miller", Gender = false, FerryId = 2 },
+                new Guest { Id = 7, Name = "Grace Lee", Gender = true, FerryId = 2 },
+                new Guest { Id = 8, Name = "Hank Green", Gender = false, FerryId = 2 },
+                new Guest { Id = 9, Name = "Isaac Newton", Gender = false, FerryId = 1 },
+                new Guest { Id = 10, Name = "Marie Curie", Gender = true, FerryId = 1 }
             );
         }
     }
