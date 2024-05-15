@@ -1,35 +1,37 @@
 ﻿@model IEnumerable<FerryBookingClassLibrary.Models.Ferry>
 
 @{
-    ViewData["Title"] = "Ferry List";
+    ViewData["Title"] = "Ferries";
 }
 
-<h2>Ferry List</h2>
+<h1>Ferries</h1>
 
 <p>
-    <a asp-action="Create">Create New Ferry</a>
+    <a class="btn btn-primary" asp-action="Create">Create New Ferry</a>
 </p>
-
 <table class="table">
     <thead>
     <tr>
-        <th>ID</th>
-        <th>Length</th>
-        <th>Max Guests</th>
-        <th>Actions</th>
+        <th>@Html.DisplayNameFor(model => model.Length)</th>
+        <th>@Html.DisplayNameFor(model => model.MaxGuests)</th>
+        <th>Total Guests</th>
+        <th>Total Cars</th>
+        <th>Total Price</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var ferry in Model)
+    @foreach (var item in Model)
     {
         <tr>
-            <td>@ferry.Id</td>
-            <td>@ferry.Length</td>
-            <td>@ferry.MaxGuests</td>
+            <td>@Html.DisplayFor(modelItem => item.Length)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaxGuests)</td>
+            <td>@item.Guests.Count</td>
+            <td>@item.Cars.Count</td>
+            <td>@item.TotalPrice</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@ferry.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@ferry.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@ferry.Id">Delete</a>
+                <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }

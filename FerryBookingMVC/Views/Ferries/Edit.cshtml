@@ -1,10 +1,10 @@
 ﻿@model FerryBookingClassLibrary.Models.Ferry
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Ferry";
 }
 
-<h1>Edit</h1>
+<h1>Edit Ferry</h1>
 
 <h4>Ferry</h4>
 <hr />
@@ -24,6 +24,16 @@
                 <span asp-validation-for="MaxGuests" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="GuestPrice" class="control-label"></label>
+                <input asp-for="GuestPrice" class="form-control" />
+                <span asp-validation-for="GuestPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarPrice" class="control-label"></label>
+                <input asp-for="CarPrice" class="form-control" />
+                <span asp-validation-for="CarPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -33,7 +43,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

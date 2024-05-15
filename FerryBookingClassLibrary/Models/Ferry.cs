@@ -20,5 +20,10 @@ namespace FerryBookingClassLibrary.Models
 
         public List<Car> Cars { get; set; } = new List<Car>();
         public List<Guest> Guests { get; set; } = new List<Guest>();
+
+        public decimal GuestPrice { get; set; } = 99;
+        public decimal CarPrice { get; set; } = 197;
+
+        public decimal TotalPrice => (Cars.Count * CarPrice) + (Guests.Count * GuestPrice);
     }
 }

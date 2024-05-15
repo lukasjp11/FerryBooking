@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FerryBookingClassLibrary;
 using FerryBookingClassLibrary.Models;
+using FerryBookingMVC.Models;
 
 namespace FerryBookingMVC.Controllers
 {
