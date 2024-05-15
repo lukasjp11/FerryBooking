@@ -50,18 +50,18 @@ namespace FerryBookingMVC.Models
                 new Ferry
                 {
                     Id = 1,
-                    Name = "Ferry 1",
-                    MaxCars = 100,
-                    MaxGuests = 50,
-                    PricePerCar = 197,
-                    PricePerGuest = 99
+                    Name = "MOLSLINJEN (Express 4)",
+                    MaxCars = 400,
+                    MaxGuests = 980,
+                    PricePerCar = 249,
+                    PricePerGuest = 149
                 },
                 new Ferry
                 {
                     Id = 2,
-                    Name = "Ferry 2",
-                    MaxCars = 120,
-                    MaxGuests = 60,
+                    Name = "Standard Ferry",
+                    MaxCars = 50,
+                    MaxGuests = 100,
                     PricePerCar = 197,
                     PricePerGuest = 99
                 }
