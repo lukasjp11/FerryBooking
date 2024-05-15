@@ -24,7 +24,7 @@ ViewData["Title"] = "Guest Index";
     {
     <tr>
         <td>@item.Name</td>
-        <td>@item.Gender</td>
+        <td>@(item.Gender ? "Female" : "Male")</td>
         <td>@item.FerryId</td>
         <td>
             <a class="btn btn-info" href="/Guests/Details/@item.Id">Details</a> |

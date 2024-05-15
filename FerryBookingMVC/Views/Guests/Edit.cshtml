@@ -1,7 +1,7 @@
 ﻿@model FerryBookingClassLibrary.Models.Guest
 
 @{
-    ViewData["Title"] = "Edit Guest";
+ViewData["Title"] = "Edit Guest";
 }
 
 <h2>Edit Guest</h2>
@@ -10,7 +10,6 @@
 <hr />
 
 <form asp-action="Edit">
-    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
@@ -18,12 +17,15 @@
     </div>
     <div class="form-group">
         <label asp-for="Gender" class="control-label"></label>
-        <input asp-for="Gender" class="form-control" />
+        <select asp-for="Gender" class="form-control">
+            <option value="false">Male</option>
+            <option value="true">Female</option>
+        </select>
         <span asp-validation-for="Gender" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="FerryId" class="control-label">Ferry Id</label>
-        <input asp-for="FerryId" class="form-control" />
+        <label asp-for="FerryId" class="control-label">Ferry</label>
+        <select asp-for="FerryId" class="form-control" asp-items="ViewBag.Ferries"></select>
         <span asp-validation-for="FerryId" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -36,5 +38,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
