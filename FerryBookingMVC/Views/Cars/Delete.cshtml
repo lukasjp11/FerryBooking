@@ -1,1 +1,37 @@
-﻿
+﻿@model FerryBookingClassLibrary.Models.Car
+
+@{
+    ViewData["Title"] = "Delete Car";
+}
+
+<h2>Delete Car</h2>
+
+<h4>Car</h4>
+<hr />
+
+<div>
+    <h4>Are you sure you want to delete this?</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ferry Id
+        </dt>
+        <dd class="col-sm-10">
+            @Model.FerryId
+        </dd>
+        <dt class="col-sm-2">
+            Guests
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var guest in Model.Guests)
+            {
+                <div>@guest.Name</div>
+            }
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-secondary" href="/Cars">Back to List</a>
+    </form>
+</div>
