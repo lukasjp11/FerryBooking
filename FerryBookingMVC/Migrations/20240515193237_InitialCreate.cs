@@ -7,7 +7,7 @@
 namespace FerryBookingMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedData : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,10 +18,11 @@ namespace FerryBookingMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxCars = table.Column<int>(type: "int", nullable: false),
                     MaxGuests = table.Column<int>(type: "int", nullable: false),
-                    GuestPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CarPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PricePerGuest = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PricePerCar = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,10 +54,10 @@ namespace FerryBookingMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CarId = table.Column<int>(type: "int", nullable: false),
-                    FerryId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<bool>(type: "bit", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: true),
+                    FerryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,11 +78,11 @@ namespace FerryBookingMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Ferries",
-                columns: new[] { "Id", "CarPrice", "GuestPrice", "MaxCars", "MaxGuests" },
+                columns: new[] { "Id", "MaxCars", "MaxGuests", "Name", "PricePerCar", "PricePerGuest" },
                 values: new object[,]
                 {
-                    { 1, 197m, 99m, 100, 50 },
-                    { 2, 197m, 99m, 120, 60 }
+                    { 1, 100, 50, "Ferry 1", 197m, 99m },
+                    { 2, 120, 60, "Ferry 2", 197m, 99m }
                 });
 
             migrationBuilder.InsertData(
@@ -100,14 +101,16 @@ namespace FerryBookingMVC.Migrations
                 columns: new[] { "Id", "CarId", "FerryId", "Gender", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "Female", "Alice Smith" },
-                    { 2, 1, 1, "Male", "Bob Johnson" },
-                    { 3, 2, 1, "Male", "Charlie Brown" },
-                    { 4, 2, 1, "Female", "Diana Prince" },
-                    { 5, 3, 2, "Female", "Eve Davis" },
-                    { 6, 3, 2, "Male", "Frank Miller" },
-                    { 7, 4, 2, "Female", "Grace Lee" },
-                    { 8, 4, 2, "Male", "Hank Green" }
+                    { 9, null, 1, false, "Isaac Newton" },
+                    { 10, null, 1, true, "Marie Curie" },
+                    { 1, 1, 1, true, "Alice Smith" },
+                    { 2, 1, 1, false, "Bob Johnson" },
+                    { 3, 2, 1, false, "Charlie Brown" },
+                    { 4, 2, 1, true, "Diana Prince" },
+                    { 5, 3, 2, true, "Eve Davis" },
+                    { 6, 3, 2, false, "Frank Miller" },
+                    { 7, 4, 2, true, "Grace Lee" },
+                    { 8, 4, 2, false, "Hank Green" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,6 +1,14 @@
-﻿@model List<FerryBookingClassLibrary.Models.Ferry>
+﻿@model IEnumerable<FerryBookingClassLibrary.Models.Ferry>
+
+@{
+ViewData["Title"] = "Ferry Index";
+}
 
 <h2>Ferries</h2>
+
+<p>
+    <a class="btn btn-primary" href="/Ferries/Create">Create New Ferry</a>
+</p>
 
 <table class="table">
     <thead>
@@ -8,24 +16,24 @@
         <th>Name</th>
         <th>Max Cars</th>
         <th>Max Guests</th>
-        <th>Price Per Guest</th>
         <th>Price Per Car</th>
+        <th>Price Per Guest</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var ferry in Model)
+    @foreach (var item in Model)
     {
     <tr>
-        <td>@ferry.Name</td>
-        <td>@ferry.MaxCars</td>
-        <td>@ferry.MaxGuests</td>
-        <td>@ferry.PricePerGuest</td>
-        <td>@ferry.PricePerCar</td>
+        <td>@item.Name</td>
+        <td>@item.MaxCars</td>
+        <td>@item.MaxGuests</td>
+        <td>@item.PricePerCar</td>
+        <td>@item.PricePerGuest</td>
         <td>
-            <a asp-action="Edit" asp-route-id="@ferry.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@ferry.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@ferry.Id">Delete</a>
+            <a class="btn btn-info" href="/Ferries/Details/@item.Id">Details</a> |
+            <a class="btn btn-warning" href="/Ferries/Edit/@item.Id">Edit</a> |
+            <a class="btn btn-danger" href="/Ferries/Delete/@item.Id">Delete</a>
         </td>
     </tr>
     }

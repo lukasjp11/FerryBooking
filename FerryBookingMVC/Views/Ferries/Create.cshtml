@@ -1,36 +1,47 @@
 ﻿@model FerryBookingClassLibrary.Models.Ferry
 
 @{
-    ViewData["Title"] = "Create";
+ViewData["Title"] = "Create Ferry";
 }
 
-<h1>Create</h1>
+<h2>Create Ferry</h2>
 
 <h4>Ferry</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MaxCars" class="control-label"></label>
-                <input asp-for="MaxCars" class="form-control" />
-                <span asp-validation-for="MaxCars" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxGuests" class="control-label"></label>
-                <input asp-for="MaxGuests" class="form-control" />
-                <span asp-validation-for="MaxGuests" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-</div>
+    <div class="form-group">
+        <label asp-for="MaxCars" class="control-label"></label>
+        <input asp-for="MaxCars" class="form-control" />
+        <span asp-validation-for="MaxCars" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MaxGuests" class="control-label"></label>
+        <input asp-for="MaxGuests" class="form-control" />
+        <span asp-validation-for="MaxGuests" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PricePerCar" class="control-label"></label>
+        <input asp-for="PricePerCar" class="form-control" />
+        <span asp-validation-for="PricePerCar" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PricePerGuest" class="control-label"></label>
+        <input asp-for="PricePerGuest" class="form-control" />
+        <span asp-validation-for="PricePerGuest" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-secondary" href="/Ferries">Back to List</a>
 </div>
 
 @section Scripts {

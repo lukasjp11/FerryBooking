@@ -1,41 +1,10 @@
-﻿@model IEnumerable<FerryBookingClassLibrary.Models.Ferry>
-
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{
+ViewData["Title"] = "Home Page";
 }
 
-<h1>Ferries</h1>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>MaxCars</th>
-        <th>Max Guests</th>
-        <th>Total Guests</th>
-        <th>Total Cars</th>
-        <th>Total Price</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var ferry in Model)
-    {
-        <tr>
-            <td>@ferry.Id</td>
-            <td>@ferry.MaxCars</td>
-            <td>@ferry.MaxGuests</td>
-            <td>@ferry.Guests.Count</td>
-            <td>@ferry.Cars.Count</td>
-            <td>@ferry.TotalPrice</td>
-            <td>
-                <a asp-action="Details" asp-controller="Ferries" asp-route-id="@ferry.Id">View</a>
-                <a asp-action="Edit" asp-controller="Ferries" asp-route-id="@ferry.Id">Edit</a>
-                <a asp-action="Delete" asp-controller="Ferries" asp-route-id="@ferry.Id">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-
-<a asp-action="Create" asp-controller="Ferries">Create New Ferry</a>
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to Ferry Booking!</h1>
+    <p class="lead">This is a simple application to manage ferry bookings, including cars and guests.</p>
+    <hr class="my-4">
+    <p>Use the navigation bar to manage ferries, cars, and guests.</p>
+</div>

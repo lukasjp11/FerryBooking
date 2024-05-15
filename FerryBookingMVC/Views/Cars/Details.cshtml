@@ -1,18 +1,35 @@
 ﻿@model FerryBookingClassLibrary.Models.Car
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Car Details";
 }
 
-<h1>Details</h1>
+<h2>Car Details</h2>
 
 <div>
     <h4>Car</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            ID
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Id
+        </dd>
+        <dt class="col-sm-2">
+            Guests
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var guest in Model.Guests)
+                {
+                    <li>@guest.Name (@guest.Gender)</li>
+                }
+            </ul>
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" href="/Cars/Edit/@Model.Id">Edit</a> |
+    <a class="btn btn-secondary" href="/Cars">Back to List</a>
 </div>
