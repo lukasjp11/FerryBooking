@@ -1,7 +1,7 @@
-﻿@model FerryBookingClassLibrary.Models.Car
+﻿@model FerryBookingMVC.Models.CarViewModel
 
 @{
-    ViewData["Title"] = "Edit Car";
+ViewData["Title"] = "Edit Car";
 }
 
 <h2>Edit Car</h2>
@@ -10,16 +10,23 @@
 <hr />
 
 <form asp-action="Edit">
-    <input type="hidden" asp-for="Id" />
     <div class="form-group">
-        <label asp-for="FerryId" class="control-label">Ferry Id</label>
-        <input asp-for="FerryId" class="form-control" />
-        <span asp-validation-for="FerryId" class="text-danger"></span>
+        <label class="control-label">Guests</label>
+        <div>
+            @foreach (var guest in ViewBag.Guests)
+            {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id" @(Model.SelectedGuestIds.Contains(guest.Id) ? "checked" : "") />
+                <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
+            </div>
+            }
+        </div>
+        <span asp-validation-for="SelectedGuestIds" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Guests" class="control-label">Guests</label>
-        <input asp-for="Guests" class="form-control" />
-        <span asp-validation-for="Guests" class="text-danger"></span>
+        <label asp-for="FerryId" class="control-label">Ferry</label>
+        <select asp-for="FerryId" class="form-control" asp-items="ViewBag.Ferries"></select>
+        <span asp-validation-for="FerryId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
@@ -31,5 +38,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

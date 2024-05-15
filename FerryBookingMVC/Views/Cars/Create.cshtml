@@ -1,7 +1,7 @@
-﻿@model FerryBookingClassLibrary.Models.Car
+﻿@model FerryBookingMVC.Models.CarViewModel
 
 @{
-    ViewData["Title"] = "Create Car";
+ViewData["Title"] = "Create Car";
 }
 
 <h2>Create Car</h2>
@@ -11,13 +11,21 @@
 
 <form asp-action="Create">
     <div class="form-group">
-        <label asp-for="Guests" class="control-label">Guests</label>
-        <input asp-for="Guests" class="form-control" />
-        <span asp-validation-for="Guests" class="text-danger"></span>
+        <label class="control-label">Guests</label>
+        <div>
+            @foreach (var guest in ViewBag.Guests)
+            {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id" />
+                <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
+            </div>
+            }
+        </div>
+        <span asp-validation-for="SelectedGuestIds" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="FerryId" class="control-label">Ferry Id</label>
-        <input asp-for="FerryId" class="form-control" />
+        <label asp-for="FerryId" class="control-label">Ferry</label>
+        <select asp-for="FerryId" class="form-control" asp-items="ViewBag.Ferries"></select>
         <span asp-validation-for="FerryId" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -30,5 +38,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
