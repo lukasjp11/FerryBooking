@@ -10,6 +10,8 @@ namespace FerryBookingClassLibrary.Models
     public class Guest
     {
         public int Id { get; set; }
+        public int CarId { get; set; }
+        public int FerryId { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Name cannot be longer than 50 characters.")]

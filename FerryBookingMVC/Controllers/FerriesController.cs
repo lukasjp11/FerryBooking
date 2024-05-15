@@ -35,7 +35,11 @@ namespace FerryBookingMVC.Controllers
             }
 
             var ferry = await _context.Ferries
+                .Include(f => f.Cars)
+                .ThenInclude(c => c.Guests)
+                .Include(f => f.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (ferry == null)
             {
                 return NotFound();
@@ -55,7 +59,7 @@ namespace FerryBookingMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Length,MaxGuests")] Ferry ferry)
+        public async Task<IActionResult> Create([Bind("Id,MaxCars,MaxGuests")] Ferry ferry)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +91,7 @@ namespace FerryBookingMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Length,MaxGuests")] Ferry ferry)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MaxCars,MaxGuests")] Ferry ferry)
         {
             if (id != ferry.Id)
             {

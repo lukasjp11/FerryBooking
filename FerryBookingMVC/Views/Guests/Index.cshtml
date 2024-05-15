@@ -6,28 +6,34 @@
 
 <h1>Guests</h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create New Guest</a>
-</p>
 <table class="table">
     <thead>
     <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Gender</th>
-        <th></th>
+        <th>Car ID</th>
+        <th>Ferry ID</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
+    @foreach (var guest in Model)
     {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+            <td>@guest.Id</td>
+            <td>@guest.Name</td>
+            <td>@guest.Gender</td>
+            <td>@guest.CarId</td>
+            <td>@guest.FerryId</td>
             <td>
-                <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@guest.Id">View</a>
+                <a asp-action="Edit" asp-route-id="@guest.Id">Edit</a>
+                <a asp-action="Delete" asp-route-id="@guest.Id">Delete</a>
             </td>
         </tr>
     }
     </tbody>
 </table>
+
+<a asp-action="Create">Create New Guest</a>

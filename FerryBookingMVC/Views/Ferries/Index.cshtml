@@ -1,39 +1,93 @@
-﻿@model IEnumerable<FerryBookingClassLibrary.Models.Ferry>
+﻿@model FerryBookingClassLibrary.Models.Ferry
 
 @{
-    ViewData["Title"] = "Ferries";
+    ViewData["Title"] = "Ferry Details";
 }
 
-<h1>Ferries</h1>
+<h1>Ferry Details</h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create New Ferry</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.Length)</th>
-        <th>@Html.DisplayNameFor(model => model.MaxGuests)</th>
-        <th>Total Guests</th>
-        <th>Total Cars</th>
-        <th>Total Price</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Length)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaxGuests)</td>
-            <td>@item.Guests.Count</td>
-            <td>@item.Cars.Count</td>
-            <td>@item.TotalPrice</td>
-            <td>
-                <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div>
+    <h4>Ferry</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ID
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Id
+        </dd>
+        <dt class="col-sm-2">
+            MaxCars
+        </dt>
+        <dd class="col-sm-10">
+            @Model.MaxCars
+        </dd>
+        <dt class="col-sm-2">
+            Max Guests
+        </dt>
+        <dd class="col-sm-10">
+            @Model.MaxGuests
+        </dd>
+        <dt class="col-sm-2">
+            Total Price
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TotalPrice
+        </dd>
+    </dl>
+
+    <h4>Cars</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Guests</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model.Cars)
+            {
+                <tr>
+                    <td>@car.Id</td>
+                    <td>@car.Guests.Count</td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Cars" asp-route-id="@car.Id">View</a>
+                        <a asp-action="Edit" asp-controller="Cars" asp-route-id="@car.Id">Edit</a>
+                        <a asp-action="Delete" asp-controller="Cars" asp-route-id="@car.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Guests</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var guest in Model.Guests)
+            {
+                <tr>
+                    <td>@guest.Id</td>
+                    <td>@guest.Name</td>
+                    <td>@guest.Gender</td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Guests" asp-route-id="@guest.Id">View</a>
+                        <a asp-action="Edit" asp-controller="Guests" asp-route-id="@guest.Id">Edit</a>
+                        <a asp-action="Delete" asp-controller="Guests" asp-route-id="@guest.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

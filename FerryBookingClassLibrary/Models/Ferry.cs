@@ -13,7 +13,7 @@ namespace FerryBookingClassLibrary.Models
         public int Id { get; set; }
 
         [Range(10, int.MaxValue, ErrorMessage = "The ferry must have space for at least 10 cars.")]
-        public int Length { get; set; }
+        public int MaxCars { get; set; }
 
         [Range(40, int.MaxValue, ErrorMessage = "The ferry must have space for at least 40 guests.")]
         public int MaxGuests { get; set; }

@@ -23,7 +23,8 @@ namespace FerryBookingMVC.Controllers
         // GET: Cars
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cars.ToListAsync());
+            var cars = await _context.Cars.Include(c => c.Guests).ToListAsync();
+            return View(cars);
         }
 
         // GET: Cars/Details/5
@@ -35,7 +36,9 @@ namespace FerryBookingMVC.Controllers
             }
 
             var car = await _context.Cars
+                .Include(c => c.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (car == null)
             {
                 return NotFound();

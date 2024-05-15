@@ -7,7 +7,7 @@
 namespace FerryBookingMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class SeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,10 @@ namespace FerryBookingMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Length = table.Column<int>(type: "int", nullable: false),
-                    MaxGuests = table.Column<int>(type: "int", nullable: false)
+                    MaxCars = table.Column<int>(type: "int", nullable: false),
+                    MaxGuests = table.Column<int>(type: "int", nullable: false),
+                    GuestPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CarPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,8 +34,7 @@ namespace FerryBookingMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DriverId = table.Column<int>(type: "int", nullable: false),
-                    FerryId = table.Column<int>(type: "int", nullable: true)
+                    FerryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +43,8 @@ namespace FerryBookingMVC.Migrations
                         name: "FK_Cars_Ferries_FerryId",
                         column: x => x.FerryId,
                         principalTable: "Ferries",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,10 +53,10 @@ namespace FerryBookingMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CarId = table.Column<int>(type: "int", nullable: true),
-                    FerryId = table.Column<int>(type: "int", nullable: true)
+                    CarId = table.Column<int>(type: "int", nullable: false),
+                    FerryId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,27 +65,50 @@ namespace FerryBookingMVC.Migrations
                         name: "FK_Guests_Cars_CarId",
                         column: x => x.CarId,
                         principalTable: "Cars",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Guests_Ferries_FerryId",
                         column: x => x.FerryId,
                         principalTable: "Ferries",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "Ferries",
-                columns: new[] { "Id", "Length", "MaxGuests" },
+                columns: new[] { "Id", "CarPrice", "GuestPrice", "MaxCars", "MaxGuests" },
                 values: new object[,]
                 {
-                    { 1, 10, 40 },
-                    { 2, 20, 100 }
+                    { 1, 197m, 99m, 100, 50 },
+                    { 2, 197m, 99m, 120, 60 }
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Cars_DriverId",
+            migrationBuilder.InsertData(
                 table: "Cars",
-                column: "DriverId");
+                columns: new[] { "Id", "FerryId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 },
+                    { 3, 2 },
+                    { 4, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Guests",
+                columns: new[] { "Id", "CarId", "FerryId", "Gender", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "Female", "Alice Smith" },
+                    { 2, 1, 1, "Male", "Bob Johnson" },
+                    { 3, 2, 1, "Male", "Charlie Brown" },
+                    { 4, 2, 1, "Female", "Diana Prince" },
+                    { 5, 3, 2, "Female", "Eve Davis" },
+                    { 6, 3, 2, "Male", "Frank Miller" },
+                    { 7, 4, 2, "Female", "Grace Lee" },
+                    { 8, 4, 2, "Male", "Hank Green" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_FerryId",
@@ -99,39 +124,19 @@ namespace FerryBookingMVC.Migrations
                 name: "IX_Guests_FerryId",
                 table: "Guests",
                 column: "FerryId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Cars_Guests_DriverId",
-                table: "Cars",
-                column: "DriverId",
-                principalTable: "Guests",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Cars_Ferries_FerryId",
-                table: "Cars");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Guests_Ferries_FerryId",
-                table: "Guests");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Cars_Guests_DriverId",
-                table: "Cars");
-
-            migrationBuilder.DropTable(
-                name: "Ferries");
-
             migrationBuilder.DropTable(
                 name: "Guests");
 
             migrationBuilder.DropTable(
                 name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Ferries");
         }
     }
 }

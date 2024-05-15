@@ -23,7 +23,8 @@ namespace FerryBookingMVC.Controllers
         // GET: Guests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Guests.ToListAsync());
+            var guests = await _context.Guests.Include(g => g.CarId).Include(g => g.FerryId).ToListAsync();
+            return View(guests);
         }
 
         // GET: Guests/Details/5
@@ -35,7 +36,10 @@ namespace FerryBookingMVC.Controllers
             }
 
             var guest = await _context.Guests
+                .Include(g => g.CarId)
+                .Include(g => g.FerryId)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (guest == null)
             {
                 return NotFound();
