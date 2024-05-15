@@ -13,12 +13,10 @@ namespace FerryBookingMVC.Controllers
     public class GuestsController : Controller
     {
         private readonly FerryContext _context;
-        private readonly ILogger<GuestsController> _logger;
 
-        public GuestsController(FerryContext context, ILogger<GuestsController> logger)
+        public GuestsController(FerryContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         // GET: Guests
@@ -54,30 +52,12 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Gender,FerryId")] Guest guest)
         {
-            _logger.LogInformation($"Received FerryId: {guest.FerryId}");
-
             if (ModelState.IsValid)
             {
-                _logger.LogInformation("Model state is valid. Adding guest to context.");
                 _context.Add(guest);
                 await _context.SaveChangesAsync();
-                _logger.LogInformation("Guest saved successfully. Redirecting to Index.");
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                _logger.LogWarning("Model state is invalid. Returning to Create view.");
-                foreach (var key in ModelState.Keys)
-                {
-                    var state = ModelState[key];
-                    foreach (var error in state.Errors)
-                    {
-                        _logger.LogWarning($"Key: {key}, Error: {error.ErrorMessage}");
-                        Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
-                    }
-                }
-            }
-
             var ferries = _context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
