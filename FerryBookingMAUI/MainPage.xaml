@@ -1,0 +1,20 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FerryBookingMAUI.ViewModels"
+             x:Class="FerryBookingMAUI.MainPage">
+
+    <ContentPage.BindingContext>
+        <vm:FerryViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+        <Label Text="Ferry Booking System" FontSize="24" HorizontalOptions="Center" />
+        <ListView ItemsSource="{Binding Ferries}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Details}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

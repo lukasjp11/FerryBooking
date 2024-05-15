@@ -1,0 +1,37 @@
+﻿@model IEnumerable<FerryBookingClassLibrary.Models.Ferry>
+
+@{
+    ViewData["Title"] = "Ferry List";
+}
+
+<h2>Ferry List</h2>
+
+<p>
+    <a asp-action="Create">Create New Ferry</a>
+</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Length</th>
+        <th>Max Guests</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var ferry in Model)
+    {
+        <tr>
+            <td>@ferry.Id</td>
+            <td>@ferry.Length</td>
+            <td>@ferry.MaxGuests</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@ferry.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@ferry.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@ferry.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
