@@ -19,28 +19,28 @@ namespace FerryBookingMVC.Models
 
             // Specify precision and scale for decimal properties
             modelBuilder.Entity<Ferry>()
-                .Property(f => f.CarPrice)
+                .Property(f => f.PricePerCar)
                 .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Ferry>()
-                .Property(f => f.GuestPrice)
+                .Property(f => f.PricePerGuest)
                 .HasColumnType("decimal(18,2)");
 
             // Configure relationships
             modelBuilder.Entity<Guest>()
-                .HasOne<Car>()
+                .HasOne(g => g.Car)
                 .WithMany(c => c.Guests)
                 .HasForeignKey(g => g.CarId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Guest>()
-                .HasOne<Ferry>()
+                .HasOne(g => g.Ferry)
                 .WithMany(f => f.Guests)
                 .HasForeignKey(g => g.FerryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Car>()
-                .HasOne<Ferry>()
+                .HasOne(c => c.Ferry)
                 .WithMany(f => f.Cars)
                 .HasForeignKey(c => c.FerryId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -50,18 +50,20 @@ namespace FerryBookingMVC.Models
                 new Ferry
                 {
                     Id = 1,
+                    Name = "Ferry 1",
                     MaxCars = 100,
                     MaxGuests = 50,
-                    CarPrice = 197,
-                    GuestPrice = 99
+                    PricePerCar = 197,
+                    PricePerGuest = 99
                 },
                 new Ferry
                 {
                     Id = 2,
+                    Name = "Ferry 2",
                     MaxCars = 120,
                     MaxGuests = 60,
-                    CarPrice = 197,
-                    GuestPrice = 99
+                    PricePerCar = 197,
+                    PricePerGuest = 99
                 }
             );
 
@@ -73,14 +75,16 @@ namespace FerryBookingMVC.Models
             );
 
             modelBuilder.Entity<Guest>().HasData(
-                new Guest { Id = 1, Name = "Alice Smith", Gender = "Female", CarId = 1, FerryId = 1 },
-                new Guest { Id = 2, Name = "Bob Johnson", Gender = "Male", CarId = 1, FerryId = 1 },
-                new Guest { Id = 3, Name = "Charlie Brown", Gender = "Male", CarId = 2, FerryId = 1 },
-                new Guest { Id = 4, Name = "Diana Prince", Gender = "Female", CarId = 2, FerryId = 1 },
-                new Guest { Id = 5, Name = "Eve Davis", Gender = "Female", CarId = 3, FerryId = 2 },
-                new Guest { Id = 6, Name = "Frank Miller", Gender = "Male", CarId = 3, FerryId = 2 },
-                new Guest { Id = 7, Name = "Grace Lee", Gender = "Female", CarId = 4, FerryId = 2 },
-                new Guest { Id = 8, Name = "Hank Green", Gender = "Male", CarId = 4, FerryId = 2 }
+                new Guest { Id = 1, Name = "Alice Smith", Gender = true, CarId = 1, FerryId = 1 },
+                new Guest { Id = 2, Name = "Bob Johnson", Gender = false, CarId = 1, FerryId = 1 },
+                new Guest { Id = 3, Name = "Charlie Brown", Gender = false, CarId = 2, FerryId = 1 },
+                new Guest { Id = 4, Name = "Diana Prince", Gender = true, CarId = 2, FerryId = 1 },
+                new Guest { Id = 5, Name = "Eve Davis", Gender = true, CarId = 3, FerryId = 2 },
+                new Guest { Id = 6, Name = "Frank Miller", Gender = false, CarId = 3, FerryId = 2 },
+                new Guest { Id = 7, Name = "Grace Lee", Gender = true, CarId = 4, FerryId = 2 },
+                new Guest { Id = 8, Name = "Hank Green", Gender = false, CarId = 4, FerryId = 2 },
+                new Guest { Id = 9, Name = "Isaac Newton", Gender = false, CarId = null, FerryId = 1 },
+                new Guest { Id = 10, Name = "Marie Curie", Gender = true, CarId = null, FerryId = 1 }
             );
         }
     }

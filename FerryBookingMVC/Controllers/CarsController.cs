@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FerryBookingClassLibrary;
 using FerryBookingClassLibrary.Models;
@@ -27,7 +26,7 @@ namespace FerryBookingMVC.Controllers
             return View(cars);
         }
 
-        // GET: Cars/Details/5
+        // GET: Cars/Details/{id}
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,11 +53,9 @@ namespace FerryBookingMVC.Controllers
         }
 
         // POST: Cars/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,Guests")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +66,7 @@ namespace FerryBookingMVC.Controllers
             return View(car);
         }
 
-        // GET: Cars/Edit/5
+        // GET: Cars/Edit/{id}
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,7 +74,7 @@ namespace FerryBookingMVC.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars.FindAsync(id);
+            var car = await _context.Cars.Include(c => c.Guests).FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
                 return NotFound();
@@ -85,12 +82,10 @@ namespace FerryBookingMVC.Controllers
             return View(car);
         }
 
-        // POST: Cars/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Cars/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Guests")] Car car)
         {
             if (id != car.Id)
             {
@@ -110,17 +105,14 @@ namespace FerryBookingMVC.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(car);
         }
 
-        // GET: Cars/Delete/5
+        // GET: Cars/Delete/{id}
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,6 +121,7 @@ namespace FerryBookingMVC.Controllers
             }
 
             var car = await _context.Cars
+                .Include(c => c.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
@@ -138,7 +131,7 @@ namespace FerryBookingMVC.Controllers
             return View(car);
         }
 
-        // POST: Cars/Delete/5
+        // POST: Cars/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

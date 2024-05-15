@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FerryBookingClassLibrary;
 using FerryBookingClassLibrary.Models;
@@ -23,43 +20,34 @@ namespace FerryBookingMVC.Controllers
         // GET: Ferries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ferries.ToListAsync());
+            var ferries = await _context.Ferries.ToListAsync();
+            return View(ferries);
         }
 
-        // GET: Ferries/Details/5
+        // GET: Ferries/Details/{id}
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var ferry = await _context.Ferries
                 .Include(f => f.Cars)
                 .ThenInclude(c => c.Guests)
-                .Include(f => f.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (ferry == null)
-            {
                 return NotFound();
-            }
 
             return View(ferry);
         }
 
         // GET: Ferries/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         // POST: Ferries/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MaxCars,MaxGuests")] Ferry ferry)
+        public async Task<IActionResult> Create([Bind("Id,Name,MaxCars,MaxGuests,PricePerGuest,PricePerCar")] Ferry ferry)
         {
             if (ModelState.IsValid)
             {
@@ -70,33 +58,26 @@ namespace FerryBookingMVC.Controllers
             return View(ferry);
         }
 
-        // GET: Ferries/Edit/5
+        // GET: Ferries/Edit/{id}
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var ferry = await _context.Ferries.FindAsync(id);
             if (ferry == null)
-            {
                 return NotFound();
-            }
+
             return View(ferry);
         }
 
-        // POST: Ferries/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Ferries/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MaxCars,MaxGuests")] Ferry ferry)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,MaxCars,MaxGuests,PricePerGuest,PricePerCar")] Ferry ferry)
         {
             if (id != ferry.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -108,38 +89,29 @@ namespace FerryBookingMVC.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!FerryExists(ferry.Id))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(ferry);
         }
 
-        // GET: Ferries/Delete/5
+        // GET: Ferries/Delete/{id}
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var ferry = await _context.Ferries
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var ferry = await _context.Ferries.FirstOrDefaultAsync(m => m.Id == id);
             if (ferry == null)
-            {
                 return NotFound();
-            }
 
             return View(ferry);
         }
 
-        // POST: Ferries/Delete/5
+        // POST: Ferries/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -148,15 +120,11 @@ namespace FerryBookingMVC.Controllers
             if (ferry != null)
             {
                 _context.Ferries.Remove(ferry);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FerryExists(int id)
-        {
-            return _context.Ferries.Any(e => e.Id == id);
-        }
+        private bool FerryExists(int id) => _context.Ferries.Any(e => e.Id == id);
     }
 }

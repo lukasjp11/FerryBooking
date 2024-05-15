@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FerryBookingClassLibrary;
 using FerryBookingClassLibrary.Models;
@@ -23,40 +20,27 @@ namespace FerryBookingMVC.Controllers
         // GET: Guests
         public async Task<IActionResult> Index()
         {
-            var guests = await _context.Guests.Include(g => g.CarId).Include(g => g.FerryId).ToListAsync();
+            var guests = await _context.Guests.ToListAsync();
             return View(guests);
         }
 
-        // GET: Guests/Details/5
+        // GET: Guests/Details/{id}
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var guest = await _context.Guests
-                .Include(g => g.CarId)
-                .Include(g => g.FerryId)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
-            {
                 return NotFound();
-            }
 
             return View(guest);
         }
 
         // GET: Guests/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         // POST: Guests/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Gender")] Guest guest)
@@ -70,33 +54,26 @@ namespace FerryBookingMVC.Controllers
             return View(guest);
         }
 
-        // GET: Guests/Edit/5
+        // GET: Guests/Edit/{id}
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var guest = await _context.Guests.FindAsync(id);
             if (guest == null)
-            {
                 return NotFound();
-            }
+
             return View(guest);
         }
 
-        // POST: Guests/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Guests/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Gender")] Guest guest)
         {
             if (id != guest.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -108,38 +85,29 @@ namespace FerryBookingMVC.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!GuestExists(guest.Id))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(guest);
         }
 
-        // GET: Guests/Delete/5
+        // GET: Guests/Delete/{id}
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var guest = await _context.Guests
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
-            {
                 return NotFound();
-            }
 
             return View(guest);
         }
 
-        // POST: Guests/Delete/5
+        // POST: Guests/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -148,15 +116,11 @@ namespace FerryBookingMVC.Controllers
             if (guest != null)
             {
                 _context.Guests.Remove(guest);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GuestExists(int id)
-        {
-            return _context.Guests.Any(e => e.Id == id);
-        }
+        private bool GuestExists(int id) => _context.Guests.Any(e => e.Id == id);
     }
 }

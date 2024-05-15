@@ -12,11 +12,5 @@ namespace FerryBookingMVC.Controllers
         {
             _context = context;
         }
-
-        public async Task<IActionResult> Index()
-        {
-            var ferries = await _context.Ferries.Include(f => f.Cars).Include(f => f.Guests).ToListAsync();
-            return View(ferries);
-        }
     }
 }

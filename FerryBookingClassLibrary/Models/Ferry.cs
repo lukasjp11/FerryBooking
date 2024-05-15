@@ -1,29 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FerryBookingClassLibrary.Models
 {
     public class Ferry
     {
         public int Id { get; set; }
-
-        [Range(10, int.MaxValue, ErrorMessage = "The ferry must have space for at least 10 cars.")]
+        public string Name { get; set; }
         public int MaxCars { get; set; }
-
-        [Range(40, int.MaxValue, ErrorMessage = "The ferry must have space for at least 40 guests.")]
         public int MaxGuests { get; set; }
-
+        public decimal PricePerGuest { get; set; } = 99m;
+        public decimal PricePerCar { get; set; } = 197m;
         public List<Car> Cars { get; set; } = new List<Car>();
         public List<Guest> Guests { get; set; } = new List<Guest>();
 
-        public decimal GuestPrice { get; set; } = 99;
-        public decimal CarPrice { get; set; } = 197;
-
-        public decimal TotalPrice => (Cars.Count * CarPrice) + (Guests.Count * GuestPrice);
+        public bool CanAddCar() => Cars.Count < MaxCars;
+        public bool CanAddGuest() => Guests.Count < MaxGuests;
     }
 }
