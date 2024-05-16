@@ -9,19 +9,12 @@ using System.Globalization;
 
 namespace FerryBookingMVC.Controllers
 {
-    public class FerriesController : Controller
+    public class FerriesController(FerryContext context) : Controller
     {
-        private readonly FerryContext _context;
-
-        public FerriesController(FerryContext context)
-        {
-            _context = context;
-        }
-
         // GET: Ferries
         public async Task<IActionResult> Index()
         {
-            var ferries = await _context.Ferries
+            var ferries = await context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
                 .Include(f => f.Guests)
@@ -35,7 +28,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var ferry = await _context.Ferries
+            var ferry = await context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
                 .Include(f => f.Guests)
@@ -57,8 +50,8 @@ namespace FerryBookingMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ferry);
-                await _context.SaveChangesAsync();
+                context.Add(ferry);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(ferry);
@@ -70,7 +63,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var ferry = await _context.Ferries.FindAsync(id);
+            var ferry = await context.Ferries.FindAsync(id);
             if (ferry == null)
                 return NotFound();
 
@@ -89,8 +82,8 @@ namespace FerryBookingMVC.Controllers
             {
                 try
                 {
-                    _context.Update(ferry);
-                    await _context.SaveChangesAsync();
+                    context.Update(ferry);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -110,10 +103,10 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var ferry = await _context.Ferries
+            var ferry = await context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
-                .Include(f => f.Guests) // Include guests who are not in any car
+                .Include(f => f.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ferry == null)
                 return NotFound();
@@ -126,7 +119,7 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ferry = await _context.Ferries
+            var ferry = await context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
                 .Include(f => f.Guests)
@@ -134,26 +127,13 @@ namespace FerryBookingMVC.Controllers
 
             if (ferry != null)
             {
-                // Delete all guests related to this ferry
-                var guests = ferry.Guests.ToList();
-                _context.Guests.RemoveRange(guests);
-
-                // Delete all cars and their guests related to this ferry
-                var cars = ferry.Cars.ToList();
-                foreach (var car in cars)
-                {
-                    var carGuests = car.Guests.ToList();
-                    _context.Guests.RemoveRange(carGuests);
-                }
-                _context.Cars.RemoveRange(cars);
-
-                _context.Ferries.Remove(ferry);
-                await _context.SaveChangesAsync();
+                context.Ferries.Remove(ferry);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FerryExists(int id) => _context.Ferries.Any(e => e.Id == id);
+        private bool FerryExists(int id) => context.Ferries.Any(e => e.Id == id);
     }
 }

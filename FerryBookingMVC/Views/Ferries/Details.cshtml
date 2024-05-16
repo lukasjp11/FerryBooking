@@ -79,7 +79,7 @@ ViewData["Title"] = "Ferry Details";
                     <ul class="list-unstyled">
                         @foreach (var guest in car.Guests)
                         {
-                        <li>@guest.Name (@guest.Id)</li>
+                        <li>@guest.Name</li>
                         }
                     </ul>
                 </td>
@@ -91,7 +91,7 @@ ViewData["Title"] = "Ferry Details";
         <ul class="list-group mt-3">
             @foreach (var guest in Model.Guests.Except(Model.Cars.SelectMany(c => c.Guests)))
             {
-            <li class="list-group-item">@guest.Name (@guest.Id)</li>
+            <li class="list-group-item">@guest.Name</li>
             }
         </ul>
     </div>

@@ -10,19 +10,12 @@ using Microsoft.Extensions.Logging;
 
 namespace FerryBookingMVC.Controllers
 {
-    public class GuestsController : Controller
+    public class GuestsController(FerryContext context) : Controller
     {
-        private readonly FerryContext _context;
-
-        public GuestsController(FerryContext context)
-        {
-            _context = context;
-        }
-
         // GET: Guests
         public async Task<IActionResult> Index()
         {
-            var guests = await _context.Guests.ToListAsync();
+            var guests = await context.Guests.ToListAsync();
             return View(guests);
         }
 
@@ -32,7 +25,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
+            var guest = await context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
                 return NotFound();
 
@@ -42,7 +35,7 @@ namespace FerryBookingMVC.Controllers
         // GET: Guests/Create
         public IActionResult Create()
         {
-            var ferries = _context.Ferries.ToList();
+            var ferries = context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name");
             return View();
         }
@@ -54,11 +47,11 @@ namespace FerryBookingMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(guest);
-                await _context.SaveChangesAsync();
+                context.Add(guest);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            var ferries = _context.Ferries.ToList();
+            var ferries = context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
         }
@@ -69,11 +62,11 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var guest = await _context.Guests.FindAsync(id);
+            var guest = await context.Guests.FindAsync(id);
             if (guest == null)
                 return NotFound();
 
-            var ferries = _context.Ferries.ToList();
+            var ferries = context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
         }
@@ -90,8 +83,8 @@ namespace FerryBookingMVC.Controllers
             {
                 try
                 {
-                    _context.Update(guest);
-                    await _context.SaveChangesAsync();
+                    context.Update(guest);
+                    await context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -102,7 +95,7 @@ namespace FerryBookingMVC.Controllers
                 }
             }
 
-            var ferries = _context.Ferries.ToList();
+            var ferries = context.Ferries.ToList();
             ViewBag.Ferries = new SelectList(ferries, "Id", "Name", guest.FerryId);
             return View(guest);
         }
@@ -113,7 +106,7 @@ namespace FerryBookingMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
+            var guest = await context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
                 return NotFound();
 
@@ -125,15 +118,15 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var guest = await _context.Guests.FindAsync(id);
+            var guest = await context.Guests.FindAsync(id);
             if (guest != null)
             {
-                _context.Guests.Remove(guest);
-                await _context.SaveChangesAsync();
+                context.Guests.Remove(guest);
+                await context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GuestExists(int id) => _context.Guests.Any(e => e.Id == id);
+        private bool GuestExists(int id) => context.Guests.Any(e => e.Id == id);
     }
 }

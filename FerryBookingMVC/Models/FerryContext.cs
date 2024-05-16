@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FerryBookingMVC.Models
 {
-    public class FerryContext : DbContext
+    public class FerryContext(DbContextOptions<FerryContext> options) : DbContext(options)
     {
-        public FerryContext(DbContextOptions<FerryContext> options) : base(options) { }
-
         public DbSet<Ferry> Ferries { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Guest> Guests { get; set; }
@@ -15,19 +13,19 @@ namespace FerryBookingMVC.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // One-to-many relationship between Ferry and Car
+            // One-to-many relationship between Ferry and Car with cascade delete
             modelBuilder.Entity<Ferry>()
                 .HasMany(f => f.Cars)
                 .WithOne(c => c.Ferry)
                 .HasForeignKey(c => c.FerryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // One-to-many relationship between Ferry and Guest
+            // One-to-many relationship between Ferry and Guest with cascade delete
             modelBuilder.Entity<Ferry>()
                 .HasMany(f => f.Guests)
                 .WithOne(g => g.Ferry)
                 .HasForeignKey(g => g.FerryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Seed data
             modelBuilder.Entity<Ferry>().HasData(
@@ -62,15 +60,12 @@ namespace FerryBookingMVC.Models
             {
                 if (entry.Entity is Ferry ferry)
                 {
-                    // Manually delete related guests
                     var guests = Guests.Where(g => g.FerryId == ferry.Id).ToList();
                     Guests.RemoveRange(guests);
 
-                    // Manually delete related cars
                     var cars = Cars.Where(c => c.FerryId == ferry.Id).ToList();
                     foreach (var car in cars)
                     {
-                        // Manually delete guests related to each car
                         var carGuests = Guests.Where(g => g.FerryId == car.FerryId).ToList();
                         Guests.RemoveRange(carGuests);
                     }
@@ -78,7 +73,6 @@ namespace FerryBookingMVC.Models
                 }
                 else if (entry.Entity is Car car)
                 {
-                    // Manually delete related guests
                     var guests = Guests.Where(g => g.FerryId == car.FerryId).ToList();
                     Guests.RemoveRange(guests);
                 }
