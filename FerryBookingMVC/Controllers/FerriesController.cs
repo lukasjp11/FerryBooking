@@ -23,7 +23,7 @@ namespace FerryBookingMVC.Controllers
             var ferries = await _context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
-                .Include(f => f.Guests)
+                .Include(f => f.Guests) // Include guests who are not in any car
                 .ToListAsync();
             return View(ferries);
         }
@@ -37,7 +37,7 @@ namespace FerryBookingMVC.Controllers
             var ferry = await _context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
-                .Include(f => f.Guests)
+                .Include(f => f.Guests) // Include guests who are not in any car
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (ferry == null)
@@ -112,7 +112,7 @@ namespace FerryBookingMVC.Controllers
             var ferry = await _context.Ferries
                 .Include(f => f.Cars)
                     .ThenInclude(c => c.Guests)
-                .Include(f => f.Guests)
+                .Include(f => f.Guests) // Include guests who are not in any car
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ferry == null)
                 return NotFound();

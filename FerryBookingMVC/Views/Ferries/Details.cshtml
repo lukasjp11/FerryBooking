@@ -8,7 +8,7 @@ ViewData["Title"] = "Ferry Details";
 
 <div class="card">
     <div class="card-header">
-        <h4>Ferry: @Model.Name</h4>
+        <h4>@Model.Name</h4>
     </div>
     <div class="card-body">
         <dl class="row">
@@ -61,6 +61,7 @@ ViewData["Title"] = "Ferry Details";
                 @Model.CalculateTotalPrice().ToString("C")
             </dd>
         </dl>
+
         <h5>Cars on this Ferry:</h5>
         <table class="table table-bordered table-striped mt-3">
             <thead class="thead-dark">

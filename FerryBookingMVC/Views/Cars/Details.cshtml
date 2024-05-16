@@ -6,31 +6,31 @@ ViewData["Title"] = "Car Details";
 
 <h2>Car Details</h2>
 
-<hr />
-
 <div class="card">
+    <div class="card-header">
+        <h4>Car ID: @Model.Id</h4>
+    </div>
     <div class="card-body">
-        <h4 class="card-title">Car ID: @Model.Id</h4>
-        <div class="form-group">
-            <label class="font-weight-bold">Ferry:</label>
-            <p class="form-control-plaintext">@Model.FerryName</p>
+        <h5>Ferry:</h5>
+        <div class="form-group row">
+            <div class="col-sm-9">
+                <p class="form-control-plaintext">@Model.FerryName</p>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="font-weight-bold">Guests:</label>
-            <ul class="list-group">
-                @foreach (var guest in ViewBag.Guests)
-                {
-                <li class="list-group-item">@guest.Name (@guest.Id)</li>
-                }
-            </ul>
-        </div>
-        <div class="mt-3">
-            <a class="btn btn-primary" href="/Cars/Edit/@Model.Id">Edit</a>
-            <a class="btn btn-danger" href="/Cars/Delete/@Model.Id">Delete</a>
+        <h5>Guests:</h5>
+        <div class="form-group row">
+            <div class="col-sm-9">
+                <ul class="list-group">
+                    @foreach (var guest in ViewBag.Guests)
+                    {
+                        <li class="list-group-item">@guest.Name (@guest.Id)</li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="mt-3">
-    <a class="btn btn-secondary" href="/Cars">Back to List</a>
+    <div class="card-footer text-right">
+        <a class="btn btn-primary" href="/Cars/Edit/@Model.Id">Edit</a>
+        <a class="btn btn-secondary" href="/Cars">Back to List</a>
+    </div>
 </div>

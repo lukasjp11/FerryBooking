@@ -6,47 +6,103 @@ ViewData["Title"] = "Delete Ferry";
 
 <h2>Delete Ferry</h2>
 
-<h4>Ferry</h4>
-<hr />
+<div class="alert alert-danger" role="alert">
+    Are you sure you want to delete this ferry?
+</div>
 
-<div>
-    <h4>Are you sure you want to delete this?</h4>
-    <dl class="row">
-        <dt class="col-sm-2">
-            Name
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Name
-        </dd>
-        <dt class="col-sm-2">
-            Max Cars
-        </dt>
-        <dd class="col-sm-10">
-            @Model.MaxCars
-        </dd>
-        <dt class="col-sm-2">
-            Max Guests
-        </dt>
-        <dd class="col-sm-10">
-            @Model.MaxGuests
-        </dd>
-        <dt class="col-sm-2">
-            Price Per Car
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PricePerCar
-        </dd>
-        <dt class="col-sm-2">
-            Price Per Guest
-        </dt>
-        <dd class="col-sm-10">
-            @Model.PricePerGuest
-        </dd>
-    </dl>
-
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a class="btn btn-secondary" href="/Ferries">Back to List</a>
-    </form>
+<div class="card">
+    <div class="card-header">
+        <h4>Ferry: @Model.Name</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">
+                Name
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Name
+            </dd>
+            <dt class="col-sm-3">
+                Max Cars
+            </dt>
+            <dd class="col-sm-9">
+                @Model.MaxCars
+            </dd>
+            <dt class="col-sm-3">
+                Current Cars
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Cars.Count
+            </dd>
+            <dt class="col-sm-3">
+                Max Guests
+            </dt>
+            <dd class="col-sm-9">
+                @Model.MaxGuests
+            </dd>
+            <dt class="col-sm-3">
+                Current Guests
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Guests.Count
+            </dd>
+            <dt class="col-sm-3">
+                Price Per Car
+            </dt>
+            <dd class="col-sm-9">
+                @Model.PricePerCar.ToString("C")
+            </dd>
+            <dt class="col-sm-3">
+                Price Per Guest
+            </dt>
+            <dd class="col-sm-9">
+                @Model.PricePerGuest.ToString("C")
+            </dd>
+            <dt class="col-sm-3">
+                Total Price
+            </dt>
+            <dd class="col-sm-9">
+                @Model.CalculateTotalPrice().ToString("C")
+            </dd>
+        </dl>
+        <h5>Cars on this Ferry:</h5>
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark">
+            <tr>
+                <th>Car ID</th>
+                <th>Guests in Car</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var car in Model.Cars)
+            {
+            <tr>
+                <td>@car.Id</td>
+                <td>
+                    <ul class="list-unstyled">
+                        @foreach (var guest in car.Guests)
+                        {
+                        <li>@guest.Name (@guest.Id)</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+        <h5>Guests Not in Any Car:</h5>
+        <ul class="list-group mt-3">
+            @foreach (var guest in Model.Guests.Except(Model.Cars.SelectMany(c => c.Guests)))
+            {
+            <li class="list-group-item">@guest.Name (@guest.Id)</li>
+            }
+        </ul>
+    </div>
+    <div class="card-footer">
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a class="btn btn-secondary" href="/Ferries">Cancel</a>
+        </form>
+    </div>
 </div>
