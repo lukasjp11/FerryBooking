@@ -58,11 +58,11 @@ namespace FerryBookingMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("PricePerCar")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("PricePerCar")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("PricePerGuest")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("PricePerGuest")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -75,8 +75,8 @@ namespace FerryBookingMVC.Migrations
                             MaxCars = 400,
                             MaxGuests = 980,
                             Name = "MOLSLINJEN (Express 4)",
-                            PricePerCar = 249m,
-                            PricePerGuest = 149m
+                            PricePerCar = 249,
+                            PricePerGuest = 149
                         },
                         new
                         {
@@ -84,8 +84,8 @@ namespace FerryBookingMVC.Migrations
                             MaxCars = 50,
                             MaxGuests = 100,
                             Name = "Standard Ferry",
-                            PricePerCar = 197m,
-                            PricePerGuest = 99m
+                            PricePerCar = 197,
+                            PricePerGuest = 99
                         });
                 });
 

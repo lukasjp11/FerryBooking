@@ -21,8 +21,8 @@ namespace FerryBookingMVC.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxCars = table.Column<int>(type: "int", nullable: false),
                     MaxGuests = table.Column<int>(type: "int", nullable: false),
-                    PricePerGuest = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PricePerCar = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PricePerGuest = table.Column<int>(type: "int", nullable: false),
+                    PricePerCar = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,8 +80,8 @@ namespace FerryBookingMVC.Migrations
                 columns: new[] { "Id", "MaxCars", "MaxGuests", "Name", "PricePerCar", "PricePerGuest" },
                 values: new object[,]
                 {
-                    { 1, 400, 980, "MOLSLINJEN (Express 4)", 249m, 149m },
-                    { 2, 50, 100, "Standard Ferry", 197m, 99m }
+                    { 1, 400, 980, "MOLSLINJEN (Express 4)", 249, 149 },
+                    { 2, 50, 100, "Standard Ferry", 197, 99 }
                 });
 
             migrationBuilder.CreateIndex(

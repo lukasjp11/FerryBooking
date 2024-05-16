@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.Globalization;
 
 namespace FerryBookingClassLibrary.Models
 {
@@ -11,20 +11,17 @@ namespace FerryBookingClassLibrary.Models
         public string Name { get; set; }
         public int MaxCars { get; set; }
         public int MaxGuests { get; set; }
-        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
-        public decimal PricePerGuest { get; set; } = 99m;
-        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
-        public decimal PricePerCar { get; set; } = 197m;
+        public int PricePerGuest { get; set; } = 99;
+        public int PricePerCar { get; set; } = 197;
         public List<Car> Cars { get; set; } = new List<Car>();
         public List<Guest> Guests { get; set; } = new List<Guest>();
 
-        public decimal CalculateTotalPrice()
+        public int CalculateTotalPrice()
         {
-            decimal total = 0;
+            int total = 0;
             total += Cars.Count * PricePerCar;
             total += Guests.Count * PricePerGuest;
             return total;
         }
     }
 }
-
