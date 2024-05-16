@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FerryBookingClassLibrary.Models
@@ -16,17 +17,5 @@ namespace FerryBookingClassLibrary.Models
         public int FerryId { get; set; }
 
         public Ferry Ferry { get; set; }
-
-        public void AddGuest(Guest guest)
-        {
-            if (Guests.Count >= 5)
-                throw new InvalidOperationException("Cannot add more guests to the car, maximum limit reached.");
-            Guests.Add(guest);
-        }
-
-        public void RemoveGuest(Guest guest)
-        {
-            Guests.Remove(guest);
-        }
     }
 }

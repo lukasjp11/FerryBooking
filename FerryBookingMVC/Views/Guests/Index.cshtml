@@ -7,16 +7,16 @@ ViewData["Title"] = "Guest Index";
 <h2>Guests</h2>
 
 <p>
-    <a class="btn btn-primary" href="/Guests/Create">Create New Guest</a>
+    <a class="btn btn-primary mb-3" href="/Guests/Create">Create New Guest</a>
 </p>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
     <tr>
         <th>Name</th>
         <th>Gender</th>
         <th>Ferry ID</th>
-        <th></th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -27,9 +27,9 @@ ViewData["Title"] = "Guest Index";
         <td>@(item.Gender ? "Female" : "Male")</td>
         <td>@item.FerryId</td>
         <td>
-            <a class="btn btn-info" href="/Guests/Details/@item.Id">Details</a> |
-            <a class="btn btn-warning" href="/Guests/Edit/@item.Id">Edit</a> |
-            <a class="btn btn-danger" href="/Guests/Delete/@item.Id">Delete</a>
+            <a class="btn btn-info btn-sm" href="/Guests/Details/@item.Id">Details</a>
+            <a class="btn btn-warning btn-sm" href="/Guests/Edit/@item.Id">Edit</a>
+            <a class="btn btn-danger btn-sm" href="/Guests/Delete/@item.Id">Delete</a>
         </td>
     </tr>
     }

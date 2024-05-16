@@ -7,18 +7,18 @@ ViewData["Title"] = "Ferry Index";
 <h2>Ferries</h2>
 
 <p>
-    <a class="btn btn-primary" href="/Ferries/Create">Create New Ferry</a>
+    <a class="btn btn-primary mb-3" href="/Ferries/Create">Create New Ferry</a>
 </p>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
     <tr>
         <th>Name</th>
-        <th>Max Cars</th>
-        <th>Max Guests</th>
+        <th>Cars</th>
+        <th>Guests</th>
         <th>Price Per Car</th>
         <th>Price Per Guest</th>
-        <th></th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -26,14 +26,14 @@ ViewData["Title"] = "Ferry Index";
     {
     <tr>
         <td>@item.Name</td>
-        <td>@item.MaxCars</td>
-        <td>@item.MaxGuests</td>
-        <td>@item.PricePerCar</td>
-        <td>@item.PricePerGuest</td>
+        <td>@item.Cars.Count / @item.MaxCars</td>
+        <td>@item.Guests.Count / @item.MaxGuests</td>
+        <td>@item.PricePerCar.ToString("C")</td>
+        <td>@item.PricePerGuest.ToString("C")</td>
         <td>
-            <a class="btn btn-info" href="/Ferries/Details/@item.Id">Details</a> |
-            <a class="btn btn-warning" href="/Ferries/Edit/@item.Id">Edit</a> |
-            <a class="btn btn-danger" href="/Ferries/Delete/@item.Id">Delete</a>
+            <a class="btn btn-info btn-sm" href="/Ferries/Details/@item.Id">Details</a>
+            <a class="btn btn-warning btn-sm" href="/Ferries/Edit/@item.Id">Edit</a>
+            <a class="btn btn-danger btn-sm" href="/Ferries/Delete/@item.Id">Delete</a>
         </td>
     </tr>
     }
