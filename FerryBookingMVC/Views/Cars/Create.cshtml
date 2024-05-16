@@ -6,17 +6,16 @@ ViewData["Title"] = "Create Car";
 
 <h2>Create Car</h2>
 
-<h4>Car</h4>
 <hr />
 
 <form asp-action="Create">
     <div class="form-group">
-        <label class="control-label">Guests</label>
-        <div>
+        <h4>Guests:</h4>
+        <div class="card p-3" style="max-height: 300px; overflow-y: auto;">
             @foreach (var guest in ViewBag.Guests)
             {
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id" />
+                <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id"/>
                 <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
             </div>
             }

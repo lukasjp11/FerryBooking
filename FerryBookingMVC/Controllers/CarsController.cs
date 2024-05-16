@@ -42,7 +42,19 @@ namespace FerryBookingMVC.Controllers
                 return NotFound();
             }
 
-            return View(car);
+            var guests = _context.Guests.ToList();
+            ViewBag.Guests = guests;
+
+            var carViewModel = new CarViewModel
+            {
+                Id = car.Id,
+                FerryId = car.FerryId,
+                SelectedGuestIds = car.Guests.Select(g => g.Id).ToList(),
+                FerryName = _context.Ferries.FirstOrDefault(f => f.Id == car.FerryId)?.Name,
+                GuestNames = car.Guests.Select(g => g.Name).ToList()
+            };
+
+            return View(carViewModel);
         }
 
         // GET: Cars/Create
@@ -168,12 +180,25 @@ namespace FerryBookingMVC.Controllers
             var car = await _context.Cars
                 .Include(c => c.Guests)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (car == null)
             {
                 return NotFound();
             }
 
-            return View(car);
+            var guests = _context.Guests.ToList();
+            ViewBag.Guests = guests;
+
+            var carViewModel = new CarViewModel
+            {
+                Id = car.Id,
+                FerryId = car.FerryId,
+                SelectedGuestIds = car.Guests.Select(g => g.Id).ToList(),
+                FerryName = _context.Ferries.FirstOrDefault(f => f.Id == car.FerryId)?.Name,
+                GuestNames = car.Guests.Select(g => g.Name).ToList()
+            };
+
+            return View(carViewModel);
         }
 
         // POST: Cars/Delete/{id}
@@ -185,9 +210,9 @@ namespace FerryBookingMVC.Controllers
             if (car != null)
             {
                 _context.Cars.Remove(car);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
