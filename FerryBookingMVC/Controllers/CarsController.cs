@@ -26,36 +26,30 @@ namespace FerryBookingMVC.Controllers
         }
 
         // GET: Cars/Details/{id}
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var car = await _context.Cars
                 .Include(c => c.Guests)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(c => c.Ferry)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (car == null)
             {
                 return NotFound();
             }
 
-            var guests = _context.Guests.ToList();
-            ViewBag.Guests = guests;
-
-            var carViewModel = new CarViewModel
+            var viewModel = new CarViewModel
             {
                 Id = car.Id,
-                FerryId = car.FerryId,
                 SelectedGuestIds = car.Guests.Select(g => g.Id).ToList(),
-                FerryName = _context.Ferries.FirstOrDefault(f => f.Id == car.FerryId)?.Name,
-                GuestNames = car.Guests.Select(g => g.Name).ToList()
+                GuestNames = car.Guests.Select(g => g.Name).ToList(),
+                FerryId = car.FerryId,
+                FerryName = car.Ferry?.Name
             };
 
-            return View(carViewModel);
+            return View(viewModel);
         }
+
 
         // GET: Cars/Create
         public IActionResult Create()

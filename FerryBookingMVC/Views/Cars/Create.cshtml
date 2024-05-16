@@ -6,34 +6,40 @@ ViewData["Title"] = "Create Car";
 
 <h2>Create Car</h2>
 
-<hr />
-
-<form asp-action="Create">
-    <div class="form-group">
-        <h4>Guests:</h4>
-        <div class="card p-3" style="max-height: 300px; overflow-y: auto;">
-            @foreach (var guest in ViewBag.Guests)
-            {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id"/>
-                <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
+<div class="card">
+    <div class="card-header">
+        <h4>Create a new car</h4>
+    </div>
+    <form asp-action="Create" method="post">
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-3 control-label"><h5>Guests:</h5></label>
+                <div class="col-sm-9">
+                    <div class="card p-3" style="max-height: 300px; overflow-y: auto;">
+                        @foreach (var guest in ViewBag.Guests)
+                        {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id"/>
+                            <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
+                        </div>
+                        }
+                    </div>
+                    <span asp-validation-for="SelectedGuestIds" class="text-danger"></span>
+                </div>
             </div>
-            }
+            <div class="form-group row">
+                <label asp-for="FerryId" class="col-sm-3 control-label"><h5>Ferry:</h5></label>
+                <div class="col-sm-9">
+                    <select asp-for="FerryId" class="form-control" asp-items="ViewBag.Ferries"></select>
+                    <span asp-validation-for="FerryId" class="text-danger"></span>
+                </div>
+            </div>
         </div>
-        <span asp-validation-for="SelectedGuestIds" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="FerryId" class="control-label">Ferry</label>
-        <select asp-for="FerryId" class="form-control" asp-items="ViewBag.Ferries"></select>
-        <span asp-validation-for="FerryId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
-</form>
-
-<div>
-    <a class="btn btn-secondary" href="/Cars">Back to List</a>
+        <div class="card-footer text-right">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn btn-secondary" href="/Cars">Cancel</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

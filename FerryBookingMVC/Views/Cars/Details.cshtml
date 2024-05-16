@@ -11,26 +11,32 @@ ViewData["Title"] = "Car Details";
         <h4>Car ID: @Model.Id</h4>
     </div>
     <div class="card-body">
-        <h5>Ferry:</h5>
         <div class="form-group row">
+            <label class="col-sm-3 control-label"><h5>Guests:</h5></label>
             <div class="col-sm-9">
-                <p class="form-control-plaintext">@Model.FerryName</p>
+                <div class="card p-3" style="max-height: 300px; overflow-y: auto;">
+                    @foreach (var guestName in Model.GuestNames)
+                    {
+                    <div class="form-check">
+                        <label class="form-check-label">@guestName</label>
+                    </div>
+                    }
+                </div>
             </div>
         </div>
-        <h5>Guests:</h5>
         <div class="form-group row">
+            <label class="col-sm-3 control-label"><h5>Ferry:</h5></label>
             <div class="col-sm-9">
-                <ul class="list-group">
-                    @foreach (var guest in ViewBag.Guests)
-                    {
-                        <li class="list-group-item">@guest.Name (@guest.Id)</li>
-                    }
-                </ul>
+                <p class="form-control-static">@Model.FerryName</p>
             </div>
         </div>
     </div>
     <div class="card-footer text-right">
         <a class="btn btn-primary" href="/Cars/Edit/@Model.Id">Edit</a>
-        <a class="btn btn-secondary" href="/Cars">Back to List</a>
+        <a class="btn btn-secondary" href="/Cars">Cancel</a>
     </div>
 </div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

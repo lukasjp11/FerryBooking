@@ -15,8 +15,7 @@ namespace FerryBookingMVC.Models
         [Display(Name = "Ferry")]
         public int FerryId { get; set; }
 
-        // Add properties for display purposes if needed
-        public string FerryName { get; set; }
+        public string? FerryName { get; set; }
         public List<string> GuestNames { get; set; } = new List<string>();
     }
 }

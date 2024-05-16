@@ -15,15 +15,6 @@ namespace FerryBookingMVC.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Specify precision and scale for decimal properties
-            modelBuilder.Entity<Ferry>()
-                .Property(f => f.PricePerCar)
-                .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<Ferry>()
-                .Property(f => f.PricePerGuest)
-                .HasColumnType("decimal(18,2)");
-
             // Configure relationships
             modelBuilder.Entity<Guest>()
                 .HasOne(g => g.Ferry)
