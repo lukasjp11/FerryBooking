@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FerryBookingMVC.Migrations
 {
     [DbContext(typeof(FerryContext))]
-    [Migration("20240515221340_UpdateGuestModel")]
-    partial class UpdateGuestModel
+    [Migration("20240516104436_UpdateSeedData")]
+    partial class UpdateSeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,28 +41,6 @@ namespace FerryBookingMVC.Migrations
                     b.HasIndex("FerryId");
 
                     b.ToTable("Cars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FerryId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FerryId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FerryId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FerryId = 2
-                        });
                 });
 
             modelBuilder.Entity("FerryBookingClassLibrary.Models.Ferry", b =>
@@ -143,78 +121,6 @@ namespace FerryBookingMVC.Migrations
                     b.HasIndex("FerryId");
 
                     b.ToTable("Guests");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FerryId = 1,
-                            Gender = true,
-                            Name = "Alice Smith"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FerryId = 1,
-                            Gender = false,
-                            Name = "Bob Johnson"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FerryId = 1,
-                            Gender = false,
-                            Name = "Charlie Brown"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FerryId = 1,
-                            Gender = true,
-                            Name = "Diana Prince"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FerryId = 2,
-                            Gender = true,
-                            Name = "Eve Davis"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            FerryId = 2,
-                            Gender = false,
-                            Name = "Frank Miller"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            FerryId = 2,
-                            Gender = true,
-                            Name = "Grace Lee"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            FerryId = 2,
-                            Gender = false,
-                            Name = "Hank Green"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            FerryId = 1,
-                            Gender = false,
-                            Name = "Isaac Newton"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            FerryId = 1,
-                            Gender = true,
-                            Name = "Marie Curie"
-                        });
                 });
 
             modelBuilder.Entity("FerryBookingClassLibrary.Models.Car", b =>
@@ -222,7 +128,7 @@ namespace FerryBookingMVC.Migrations
                     b.HasOne("FerryBookingClassLibrary.Models.Ferry", "Ferry")
                         .WithMany("Cars")
                         .HasForeignKey("FerryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ferry");

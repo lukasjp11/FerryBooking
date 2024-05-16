@@ -99,7 +99,7 @@ ViewData["Title"] = "Delete Ferry";
         </ul>
     </div>
     <div class="card-footer text-right">
-        <form asp-action="DeleteConfirmed" method="post">
+        <form asp-action="Delete" method="post">
             <input type="hidden" asp-for="Id" />
             <button type="submit" class="btn btn-danger">Delete</button>
             <a class="btn btn-secondary" href="/Ferries">Cancel</a>

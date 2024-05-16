@@ -7,7 +7,7 @@
 namespace FerryBookingMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateGuestModel : Migration
+    public partial class UpdateSeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,7 @@ namespace FerryBookingMVC.Migrations
                         column: x => x.FerryId,
                         principalTable: "Ferries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,34 +82,6 @@ namespace FerryBookingMVC.Migrations
                 {
                     { 1, 400, 980, "MOLSLINJEN (Express 4)", 249m, 149m },
                     { 2, 50, 100, "Standard Ferry", 197m, 99m }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Cars",
-                columns: new[] { "Id", "FerryId" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 2, 1 },
-                    { 3, 2 },
-                    { 4, 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Guests",
-                columns: new[] { "Id", "CarId", "FerryId", "Gender", "Name" },
-                values: new object[,]
-                {
-                    { 1, null, 1, true, "Alice Smith" },
-                    { 2, null, 1, false, "Bob Johnson" },
-                    { 3, null, 1, false, "Charlie Brown" },
-                    { 4, null, 1, true, "Diana Prince" },
-                    { 5, null, 2, true, "Eve Davis" },
-                    { 6, null, 2, false, "Frank Miller" },
-                    { 7, null, 2, true, "Grace Lee" },
-                    { 8, null, 2, false, "Hank Green" },
-                    { 9, null, 1, false, "Isaac Newton" },
-                    { 10, null, 1, true, "Marie Curie" }
                 });
 
             migrationBuilder.CreateIndex(

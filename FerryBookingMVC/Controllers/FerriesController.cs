@@ -125,12 +125,31 @@ namespace FerryBookingMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ferry = await _context.Ferries.FindAsync(id);
+            var ferry = await _context.Ferries
+                .Include(f => f.Cars)
+                    .ThenInclude(c => c.Guests)
+                .Include(f => f.Guests)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (ferry != null)
             {
+                // Delete all guests related to this ferry
+                var guests = ferry.Guests.ToList();
+                _context.Guests.RemoveRange(guests);
+
+                // Delete all cars and their guests related to this ferry
+                var cars = ferry.Cars.ToList();
+                foreach (var car in cars)
+                {
+                    var carGuests = car.Guests.ToList();
+                    _context.Guests.RemoveRange(carGuests);
+                }
+                _context.Cars.RemoveRange(cars);
+
                 _context.Ferries.Remove(ferry);
                 await _context.SaveChangesAsync();
             }
+
             return RedirectToAction(nameof(Index));
         }
 
