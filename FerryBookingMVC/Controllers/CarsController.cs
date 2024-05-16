@@ -241,7 +241,7 @@ namespace FerryBookingMVC.Controllers
         public async Task<IActionResult> GetGuestsByFerry(int ferryId, int carId)
         {
             var guests = await _context.Guests
-                .Where(g => g.FerryId == ferryId)
+                .Where(g => g.FerryId == ferryId && !_context.Cars.Any(c => c.Id != carId && c.Guests.Any(cg => cg.Id == g.Id)))
                 .ToListAsync();
 
             var carGuests = await _context.Cars
@@ -250,7 +250,6 @@ namespace FerryBookingMVC.Controllers
                 .ToListAsync();
 
             guests.AddRange(carGuests.Where(g => g.FerryId == ferryId && !guests.Any(existingGuest => existingGuest.Id == g.Id)));
-
             return Json(guests.Select(g => new { g.Id, g.Name }));
         }
     }
