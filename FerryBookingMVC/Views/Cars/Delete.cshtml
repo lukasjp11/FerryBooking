@@ -36,7 +36,7 @@ ViewData["Title"] = "Delete Car";
         </div>
     </div>
     <div class="card-footer text-right">
-        <form asp-action="DeleteConfirmed" method="post">
+        <form asp-action="Delete" method="post">
             <input type="hidden" asp-for="Id" />
             <input type="submit" value="Delete" class="btn btn-danger" />
             <a class="btn btn-secondary" href="/Cars">Cancel</a>

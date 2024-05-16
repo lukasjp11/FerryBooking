@@ -8,32 +8,34 @@ ViewData["Title"] = "Guest Details";
 
 <div class="card">
     <div class="card-header">
-        <h4>@Model.Name</h4>
+        <h4>Guest ID: @Model.Id</h4>
     </div>
     <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">
-                Name
-            </dt>
-            <dd class="col-sm-9">
-                @Model.Name
-            </dd>
-            <dt class="col-sm-3">
-                Gender
-            </dt>
-            <dd class="col-sm-9">
-                @(Model.Gender ? "Female" : "Male")
-            </dd>
-            <dt class="col-sm-3">
-                Ferry ID
-            </dt>
-            <dd class="col-sm-9">
-                @Model.FerryId
-            </dd>
-        </dl>
+        <div class="form-group row">
+            <label class="col-sm-3 control-label"><h5>Name:</h5></label>
+            <div class="col-sm-9">
+                <p class="form-control-static">@Model.Name</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 control-label"><h5>Gender:</h5></label>
+            <div class="col-sm-9">
+                <p class="form-control-static">@(Model.Gender ? "Female" : "Male")</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 control-label"><h5>Ferry ID:</h5></label>
+            <div class="col-sm-9">
+                <p class="form-control-static">@Model.FerryId</p>
+            </div>
+        </div>
     </div>
     <div class="card-footer text-right">
         <a class="btn btn-primary" href="/Guests/Edit/@Model.Id">Edit</a>
-        <a class="btn btn-secondary" href="/Guests">Back to List</a>
+        <a class="btn btn-secondary" href="/Guests">Cancel</a>
     </div>
 </div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
