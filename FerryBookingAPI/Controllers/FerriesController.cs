@@ -1,8 +1,10 @@
 ﻿using FerryBookingClassLibrary.Data;
 using FerryBookingClassLibrary.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FerryBookingAPI.Controllers
 {
@@ -112,5 +114,4 @@ namespace FerryBookingAPI.Controllers
             return _context.Ferries.Any(e => e.Id == id);
         }
     }
-
 }

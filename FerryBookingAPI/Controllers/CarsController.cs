@@ -1,9 +1,11 @@
 ﻿using FerryBookingClassLibrary.Data;
 using FerryBookingClassLibrary.Models;
 using FerryBookingClassLibrary.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FerryBookingAPI.Controllers
 {
@@ -85,7 +87,7 @@ namespace FerryBookingAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Car>> PostCar(CarViewModel carViewModel)
         {
-            if (carViewModel.SelectedGuestIds.Count is < 1 or > 5)
+            if (carViewModel.SelectedGuestIds.Count < 1 || carViewModel.SelectedGuestIds.Count > 5)
             {
                 ModelState.AddModelError("SelectedGuestIds", "The car must have at least 1 guest and a maximum of 5 guests.");
                 return BadRequest(ModelState);
@@ -124,5 +126,4 @@ namespace FerryBookingAPI.Controllers
             return _context.Cars.Any(e => e.Id == id);
         }
     }
-
 }

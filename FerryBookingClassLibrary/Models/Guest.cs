@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace FerryBookingClassLibrary.Models
 {
@@ -16,6 +17,7 @@ namespace FerryBookingClassLibrary.Models
         [Required]
         public int FerryId { get; set; }
 
+        [JsonIgnore]
         public Ferry? Ferry { get; set; }
     }
 }

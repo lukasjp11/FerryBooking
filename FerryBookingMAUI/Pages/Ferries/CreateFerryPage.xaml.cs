@@ -1,5 +1,4 @@
 using FerryBookingClassLibrary.Models;
-using FerryBookingMAUI.Services;
 using System.Windows.Input;
 
 namespace FerryBookingMAUI.Pages
