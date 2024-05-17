@@ -1,6 +1,2 @@
 @FerryBookingAPI_HostAddress = http://localhost:5205
 
-GET {{FerryBookingAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -1,16 +1,17 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:pages="using:FerryBookingMAUI.Pages"
+       xmlns:local="clr-namespace:FerryBookingMAUI.Pages"
        x:Class="FerryBookingMAUI.AppShell">
+
     <TabBar>
         <Tab Title="Cars">
-            <ShellContent ContentTemplate="{DataTemplate pages:CarPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:CarPage}" />
         </Tab>
         <Tab Title="Ferries">
-            <ShellContent ContentTemplate="{DataTemplate pages:FerryPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:FerryPage}" />
         </Tab>
         <Tab Title="Guests">
-            <ShellContent ContentTemplate="{DataTemplate pages:GuestPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:GuestPage}" />
         </Tab>
     </TabBar>
 </Shell>
