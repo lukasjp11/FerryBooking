@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerryBookingMVC", "FerryBookingMVC\FerryBookingMVC.csproj", "{675B944D-FDBC-4D6E-A32E-479A87AB1399}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FerryBookingMVC", "FerryBookingMVC\FerryBookingMVC.csproj", "{675B944D-FDBC-4D6E-A32E-479A87AB1399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerryBookingMAUI", "FerryBookingMAUI\FerryBookingMAUI.csproj", "{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FerryBookingClassLibrary", "FerryBookingClassLibrary\FerryBookingClassLibrary.csproj", "{749412DE-9AAE-4493-9803-66F0E458B61D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerryBookingClassLibrary", "FerryBookingClassLibrary\FerryBookingClassLibrary.csproj", "{749412DE-9AAE-4493-9803-66F0E458B61D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerryBookingMAUI", "FerryBookingMAUI\FerryBookingMAUI.csproj", "{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerryBookingAPI", "FerryBookingAPI\FerryBookingAPI.csproj", "{366252E1-0FEF-4475-AFED-4FF23E6DC1C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +21,20 @@ Global
 		{675B944D-FDBC-4D6E-A32E-479A87AB1399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{675B944D-FDBC-4D6E-A32E-479A87AB1399}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{675B944D-FDBC-4D6E-A32E-479A87AB1399}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AE835A3-6C7B-4E6C-A2F5-208A9866621B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{749412DE-9AAE-4493-9803-66F0E458B61D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{749412DE-9AAE-4493-9803-66F0E458B61D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{749412DE-9AAE-4493-9803-66F0E458B61D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{749412DE-9AAE-4493-9803-66F0E458B61D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6379BAE-1423-48F1-9B12-EC4C31EC55AC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{366252E1-0FEF-4475-AFED-4FF23E6DC1C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366252E1-0FEF-4475-AFED-4FF23E6DC1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366252E1-0FEF-4475-AFED-4FF23E6DC1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366252E1-0FEF-4475-AFED-4FF23E6DC1C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
