@@ -53,15 +53,11 @@ ViewData["Title"] = "Create Car";
         $(document).ready(function() {
             $('#ferry-select').change(function() {
                 var ferryId = $(this).val();
-                console.log('Ferry selected:', ferryId); // Log the selected ferry ID
-
                 $.ajax({
                     url: '/Cars/GetGuestsByFerry',
                     type: 'GET',
                     data: { ferryId: ferryId },
                     success: function(data) {
-                        console.log('Guests data:', data); // Log the received data
-
                         var guestsContainer = $('#guests-container');
                         guestsContainer.empty();
                         $.each(data, function(index, guest) {
@@ -73,9 +69,6 @@ ViewData["Title"] = "Create Car";
                             );
                         });
                     },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching guests:', error); // Log any errors
-                    }
                 });
             });
         });

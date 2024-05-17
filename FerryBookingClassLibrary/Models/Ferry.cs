@@ -9,19 +9,20 @@ namespace FerryBookingClassLibrary.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Max Cars must be a positive number.")]
         public int MaxCars { get; set; }
 
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Max Guests must be a positive number.")]
         public int MaxGuests { get; set; }
 
-        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Price per Car must be a non-negative number.")]
         public int PricePerGuest { get; set; } = 99;
 
-        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Price per Guest must be a non-negative number.")]
         public int PricePerCar { get; set; } = 197;
 
         public List<Car> Cars { get; set; } = new List<Car>();
