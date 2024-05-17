@@ -47,17 +47,17 @@ namespace FerryBookingMAUI.Pages
 
         private async Task CreateFerry()
         {
-            // Navigate to CreateFerryPage (not implemented here)
+            await Shell.Current.GoToAsync(nameof(CreateFerryPage));
         }
 
         private async Task ShowDetails(Ferry ferry)
         {
-            // Navigate to FerryDetailsPage (not implemented here)
+            await Shell.Current.GoToAsync($"{nameof(FerryDetailsPage)}?FerryId={ferry.Id}");
         }
 
         private async Task EditFerry(Ferry ferry)
         {
-            // Navigate to EditFerryPage (not implemented here)
+            await Shell.Current.GoToAsync($"{nameof(EditFerryPage)}?FerryId={ferry.Id}");
         }
 
         private async Task DeleteFerry(Ferry ferry)

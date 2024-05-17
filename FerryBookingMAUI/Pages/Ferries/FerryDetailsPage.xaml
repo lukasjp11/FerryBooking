@@ -1,0 +1,25 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FerryBookingMAUI.Pages.FerryDetailsPage">
+    <StackLayout Padding="10">
+        <Label Text="Ferry Details" FontSize="Large" HorizontalOptions="Center" />
+
+        <Label Text="Name" FontSize="Medium" />
+        <Label Text="{Binding Ferry.Name}" FontSize="Medium" />
+
+        <Label Text="Max Cars" FontSize="Medium" />
+        <Label Text="{Binding Ferry.MaxCars}" FontSize="Medium" />
+
+        <Label Text="Max Guests" FontSize="Medium" />
+        <Label Text="{Binding Ferry.MaxGuests}" FontSize="Medium" />
+
+        <Label Text="Price per Car" FontSize="Medium" />
+        <Label Text="{Binding Ferry.PricePerCar}" FontSize="Medium" />
+
+        <Label Text="Price per Guest" FontSize="Medium" />
+        <Label Text="{Binding Ferry.PricePerGuest}" FontSize="Medium" />
+
+        <Button Text="Edit" Command="{Binding EditCommand}" />
+        <Button Text="Delete" Command="{Binding DeleteCommand}" />
+    </StackLayout>
+</ContentPage>

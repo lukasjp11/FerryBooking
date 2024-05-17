@@ -1,0 +1,15 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FerryBookingMAUI.Pages.CreateFerryPage">
+    <StackLayout Padding="10">
+        <Label Text="Create Ferry" FontSize="Large" HorizontalOptions="Center" />
+
+        <Entry Placeholder="Name" Text="{Binding Ferry.Name}" />
+        <Entry Placeholder="Max Cars" Text="{Binding Ferry.MaxCars}" Keyboard="Numeric" />
+        <Entry Placeholder="Max Guests" Text="{Binding Ferry.MaxGuests}" Keyboard="Numeric" />
+        <Entry Placeholder="Price per Car" Text="{Binding Ferry.PricePerCar}" Keyboard="Numeric" />
+        <Entry Placeholder="Price per Guest" Text="{Binding Ferry.PricePerGuest}" Keyboard="Numeric" />
+
+        <Button Text="Create" Command="{Binding CreateCommand}" />
+    </StackLayout>
+</ContentPage>

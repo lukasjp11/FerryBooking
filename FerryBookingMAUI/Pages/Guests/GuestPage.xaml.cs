@@ -47,17 +47,17 @@ namespace FerryBookingMAUI.Pages
 
         private async Task CreateGuest()
         {
-            // Navigate to CreateGuestPage (not implemented here)
+            await Shell.Current.GoToAsync(nameof(CreateGuestPage));
         }
 
         private async Task ShowDetails(Guest guest)
         {
-            // Navigate to GuestDetailsPage (not implemented here)
+            await Shell.Current.GoToAsync($"{nameof(GuestDetailsPage)}?GuestId={guest.Id}");
         }
 
         private async Task EditGuest(Guest guest)
         {
-            // Navigate to EditGuestPage (not implemented here)
+            await Shell.Current.GoToAsync($"{nameof(EditGuestPage)}?GuestId={guest.Id}");
         }
 
         private async Task DeleteGuest(Guest guest)

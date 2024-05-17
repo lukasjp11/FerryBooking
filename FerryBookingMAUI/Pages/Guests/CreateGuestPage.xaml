@@ -1,0 +1,22 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FerryBookingMAUI.Pages.CreateGuestPage">
+    <StackLayout Padding="10">
+        <Label Text="Create Guest" FontSize="Large" HorizontalOptions="Center" />
+
+        <Entry Placeholder="Name" Text="{Binding Guest.Name}" />
+
+        <Picker Title="Gender" SelectedItem="{Binding Guest.Gender}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Male</x:String>
+                    <x:String>Female</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" />
+
+        <Button Text="Create" Command="{Binding CreateCommand}" />
+    </StackLayout>
+</ContentPage>

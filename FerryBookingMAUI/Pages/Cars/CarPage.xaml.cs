@@ -47,17 +47,17 @@ namespace FerryBookingMAUI.Pages
 
         private async Task CreateCar()
         {
-            // Navigate to CreateCarPage (not implemented here)
+            await Shell.Current.GoToAsync(nameof(CreateCarPage));
         }
 
         private async Task ShowDetails(Car car)
         {
-            // Navigate to CarDetailsPage (not implemented here)
+            await Shell.Current.GoToAsync($"{nameof(CarDetailsPage)}?CarId={car.Id}");
         }
 
         private async Task EditCar(Car car)
         {
-            // Navigate to EditCarPage (not implemented here)
+            await Shell.Current.GoToAsync($"{nameof(EditCarPage)}?CarId={car.Id}");
         }
 
         private async Task DeleteCar(Car car)

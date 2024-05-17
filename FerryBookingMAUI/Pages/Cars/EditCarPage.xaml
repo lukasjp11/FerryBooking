@@ -1,0 +1,22 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FerryBookingMAUI.Pages.EditCarPage">
+    <StackLayout Padding="10">
+        <Label Text="Edit Car" FontSize="Large" HorizontalOptions="Center" />
+
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" />
+
+        <Label Text="Select Guests" FontSize="Medium" />
+        <CollectionView ItemsSource="{Binding Guests}" SelectionMode="Multiple" SelectedItems="{Binding SelectedGuests}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding Name}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Save" Command="{Binding SaveCommand}" />
+    </StackLayout>
+</ContentPage>
