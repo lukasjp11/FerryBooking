@@ -1,0 +1,31 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FerryBookingMAUI.Pages"
+             xmlns:converters="clr-namespace:FerryBookingMAUI.Converters"
+             x:Class="FerryBookingMAUI.Pages.GuestPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToGenderConverter x:Key="BoolToGenderConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Label Text="Guests" FontSize="Large" HorizontalOptions="Center" />
+
+        <Button Text="Create New Guest" Command="{Binding CreateGuestCommand}" />
+
+        <CollectionView ItemsSource="{Binding Guests}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" Orientation="Horizontal">
+                        <Label Text="{Binding Name}" FontSize="Medium" WidthRequest="100" />
+                        <Label Text="{Binding Gender, Converter={StaticResource BoolToGenderConverter}}" FontSize="Medium" WidthRequest="100" />
+                        <Label Text="{Binding FerryId}" FontSize="Medium" WidthRequest="100" />
+                        <Button Text="Details" Command="{Binding BindingContext.DetailsCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                        <Button Text="Edit" Command="{Binding BindingContext.EditCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                        <Button Text="Delete" Command="{Binding BindingContext.DeleteCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

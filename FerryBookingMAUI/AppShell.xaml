@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="FerryBookingMAUI.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:FerryBookingMAUI"
-    Shell.FlyoutBehavior="Disabled"
-    Title="FerryBookingMAUI">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="using:FerryBookingMAUI.Pages"
+       x:Class="FerryBookingMAUI.AppShell">
+    <TabBar>
+        <Tab Title="Cars">
+            <ShellContent ContentTemplate="{DataTemplate pages:CarPage}" />
+        </Tab>
+        <Tab Title="Ferries">
+            <ShellContent ContentTemplate="{DataTemplate pages:FerryPage}" />
+        </Tab>
+        <Tab Title="Guests">
+            <ShellContent ContentTemplate="{DataTemplate pages:GuestPage}" />
+        </Tab>
+    </TabBar>
 </Shell>

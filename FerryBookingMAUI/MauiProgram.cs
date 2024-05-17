@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FerryBookingMAUI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace FerryBookingMAUI
 {
@@ -12,12 +13,15 @@ namespace FerryBookingMAUI
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            builder.Services.AddSingleton<HttpClient>(sp =>
+            {
+                return new HttpClient { BaseAddress = new Uri("https://yourapiurl/") };
+            });
+            builder.Services.AddTransient<FerryService>();
+            builder.Services.AddTransient<CarService>();
+            builder.Services.AddTransient<GuestService>();
 
             return builder.Build();
         }
