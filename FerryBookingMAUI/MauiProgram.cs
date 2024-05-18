@@ -35,13 +35,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<GuestPage>();
         builder.Services.AddTransient<CreateCarPage>();
         builder.Services.AddTransient<EditCarPage>();
-        builder.Services.AddTransient<CarDetailsPage>();
         builder.Services.AddTransient<CreateFerryPage>();
         builder.Services.AddTransient<EditFerryPage>();
-        builder.Services.AddTransient<FerryDetailsPage>();
         builder.Services.AddTransient<CreateGuestPage>();
         builder.Services.AddTransient<EditGuestPage>();
-        builder.Services.AddTransient<GuestDetailsPage>();
 
         return builder.Build();
     }

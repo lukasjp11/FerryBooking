@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Text.Json;
 
 public class CarService
 {
@@ -19,13 +20,11 @@ public class CarService
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();
-        var cars = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Car>>(content, new System.Text.Json.JsonSerializerOptions
+        return JsonSerializer.Deserialize<IEnumerable<Car>>(content, new JsonSerializerOptions
         {
             ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
             PropertyNameCaseInsensitive = true
         });
-
-        return cars;
     }
 
     public async Task<Car> GetCarByIdAsync(int id)
@@ -34,24 +33,22 @@ public class CarService
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();
-        var car = System.Text.Json.JsonSerializer.Deserialize<Car>(content, new System.Text.Json.JsonSerializerOptions
+        return JsonSerializer.Deserialize<Car>(content, new JsonSerializerOptions
         {
             ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
             PropertyNameCaseInsensitive = true
         });
-
-        return car;
     }
 
     public async Task CreateCarAsync(Car car)
     {
-        var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(car), System.Text.Encoding.UTF8, "application/json");
+        var content = new StringContent(JsonSerializer.Serialize(car), System.Text.Encoding.UTF8, "application/json");
         await _httpClient.PostAsync("https://localhost:7163/api/cars", content);
     }
 
     public async Task UpdateCarAsync(int id, Car car)
     {
-        var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(car), System.Text.Encoding.UTF8, "application/json");
+        var content = new StringContent(JsonSerializer.Serialize(car), System.Text.Encoding.UTF8, "application/json");
         await _httpClient.PutAsync($"https://localhost:7163/api/cars/{id}", content);
     }
 

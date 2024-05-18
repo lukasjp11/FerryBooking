@@ -13,16 +13,22 @@
 
         <Button Text="Create New Guest" Command="{Binding CreateGuestCommand}" />
 
+        <StackLayout Orientation="Horizontal" Padding="10" BackgroundColor="LightGray">
+            <Label Text="Name" FontSize="Medium" WidthRequest="200" FontAttributes="Bold" />
+            <Label Text="Gender" FontSize="Medium" WidthRequest="150" FontAttributes="Bold" />
+            <Label Text="Ferry ID" FontSize="Medium" WidthRequest="150" FontAttributes="Bold" />
+            <Label Text="Actions" FontSize="Medium" WidthRequest="250" FontAttributes="Bold" />
+        </StackLayout>
+
         <CollectionView ItemsSource="{Binding Guests}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10" Orientation="Horizontal">
-                        <Label Text="{Binding Name}" FontSize="Medium" WidthRequest="100" />
-                        <Label Text="{Binding Gender, Converter={StaticResource BoolToGenderConverter}}" FontSize="Medium" WidthRequest="100" />
-                        <Label Text="{Binding FerryId}" FontSize="Medium" WidthRequest="100" />
-                        <Button Text="Details" Command="{Binding BindingContext.DetailsCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
-                        <Button Text="Edit" Command="{Binding BindingContext.EditCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
-                        <Button Text="Delete" Command="{Binding BindingContext.DeleteCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                        <Label Text="{Binding Name}" FontSize="Medium" WidthRequest="200" />
+                        <Label Text="{Binding Gender, Converter={StaticResource BoolToGenderConverter}}" FontSize="Medium" WidthRequest="150" />
+                        <Label Text="{Binding FerryId}" FontSize="Medium" WidthRequest="150" />
+                        <Button Text="Edit" BackgroundColor="#FFD700" Command="{Binding BindingContext.EditCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                        <Button Text="Delete" BackgroundColor="#DC143C" TextColor="White" Command="{Binding BindingContext.DeleteCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

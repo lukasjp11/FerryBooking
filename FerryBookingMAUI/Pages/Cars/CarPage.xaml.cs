@@ -11,7 +11,6 @@ namespace FerryBookingMAUI.Pages
         public ObservableCollection<Car> Cars { get; set; } = new ObservableCollection<Car>();
 
         public ICommand CreateCarCommand { get; }
-        public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
 
@@ -21,7 +20,6 @@ namespace FerryBookingMAUI.Pages
             _carService = carService;
 
             CreateCarCommand = new Command(async () => await CreateCar());
-            DetailsCommand = new Command<Car>(async (car) => await ShowDetails(car));
             EditCommand = new Command<Car>(async (car) => await EditCar(car));
             DeleteCommand = new Command<Car>(async (car) => await DeleteCar(car));
 
@@ -47,11 +45,6 @@ namespace FerryBookingMAUI.Pages
         private async Task CreateCar()
         {
             await Shell.Current.GoToAsync(nameof(CreateCarPage));
-        }
-
-        private async Task ShowDetails(Car car)
-        {
-            await Shell.Current.GoToAsync($"{nameof(CarDetailsPage)}?CarId={car.Id}");
         }
 
         private async Task EditCar(Car car)

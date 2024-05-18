@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Text.Json;
 
 public class GuestService
 {
@@ -38,4 +39,18 @@ public class GuestService
     {
         await _httpClient.DeleteAsync($"api/guests/{id}");
     }
+
+    public async Task<IEnumerable<Guest>> GetGuestsByFerryAsync(int ferryId)
+    {
+        var response = await _httpClient.GetAsync($"https://localhost:7163/api/guests/byferry/{ferryId}");
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<IEnumerable<Guest>>(content, new JsonSerializerOptions
+        {
+            ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
+            PropertyNameCaseInsensitive = true
+        });
+    }
+
 }

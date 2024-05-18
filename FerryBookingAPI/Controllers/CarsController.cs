@@ -53,6 +53,12 @@ namespace FerryBookingAPI.Controllers
                 return BadRequest();
             }
 
+            if (carViewModel.SelectedGuestIds.Count < 1 || carViewModel.SelectedGuestIds.Count > 5)
+            {
+                ModelState.AddModelError("SelectedGuestIds", "The car must have at least 1 guest and a maximum of 5 guests.");
+                return BadRequest(ModelState);
+            }
+
             var car = await _context.Cars.Include(c => c.Guests).FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
@@ -79,44 +85,6 @@ namespace FerryBookingAPI.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: api/Cars
-        [HttpPost]
-        public async Task<ActionResult<Car>> PostCar(CarViewModel carViewModel)
-        {
-            if (carViewModel.SelectedGuestIds.Count < 1 || carViewModel.SelectedGuestIds.Count > 5)
-            {
-                ModelState.AddModelError("SelectedGuestIds", "The car must have at least 1 guest and a maximum of 5 guests.");
-                return BadRequest(ModelState);
-            }
-
-            var car = new Car
-            {
-                FerryId = carViewModel.FerryId,
-                Guests = _context.Guests.Where(g => carViewModel.SelectedGuestIds.Contains(g.Id)).ToList()
-            };
-
-            _context.Cars.Add(car);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetCar), new { id = car.Id }, car);
-        }
-
-        // DELETE: api/Cars/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCar(int id)
-        {
-            var car = await _context.Cars.Include(c => c.Guests).FirstOrDefaultAsync(m => m.Id == id);
-            if (car == null)
-            {
-                return NotFound();
-            }
-
-            _context.Cars.Remove(car);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }

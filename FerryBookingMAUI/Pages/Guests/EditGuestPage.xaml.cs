@@ -51,14 +51,13 @@ namespace FerryBookingMAUI.Pages
         {
             Guest = await _guestService.GetGuestByIdAsync(GuestId);
             SelectedFerry = Ferries.FirstOrDefault(f => f.Id == Guest.FerryId);
-            Guest.Gender = Guest.Gender.Equals("Female");
+            // Gender should be directly bound and no need for conversion here
         }
 
         private async Task SaveGuest()
         {
             Guest.FerryId = SelectedFerry.Id;
-            Guest.Gender = Guest.Gender.Equals("Female");
-
+            // Gender binding should directly save without conversion if bound properly
             await _guestService.UpdateGuestAsync(GuestId, Guest);
             await Navigation.PopAsync();
         }

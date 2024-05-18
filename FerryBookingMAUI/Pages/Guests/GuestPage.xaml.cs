@@ -11,7 +11,6 @@ namespace FerryBookingMAUI.Pages
         public ObservableCollection<Guest> Guests { get; set; } = new ObservableCollection<Guest>();
 
         public ICommand CreateGuestCommand { get; }
-        public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
 
@@ -21,7 +20,6 @@ namespace FerryBookingMAUI.Pages
             _guestService = guestService;
 
             CreateGuestCommand = new Command(async () => await CreateGuest());
-            DetailsCommand = new Command<Guest>(async (guest) => await ShowDetails(guest));
             EditCommand = new Command<Guest>(async (guest) => await EditGuest(guest));
             DeleteCommand = new Command<Guest>(async (guest) => await DeleteGuest(guest));
 
@@ -47,11 +45,6 @@ namespace FerryBookingMAUI.Pages
         private async Task CreateGuest()
         {
             await Shell.Current.GoToAsync(nameof(CreateGuestPage));
-        }
-
-        private async Task ShowDetails(Guest guest)
-        {
-            await Shell.Current.GoToAsync($"{nameof(GuestDetailsPage)}?GuestId={guest.Id}");
         }
 
         private async Task EditGuest(Guest guest)

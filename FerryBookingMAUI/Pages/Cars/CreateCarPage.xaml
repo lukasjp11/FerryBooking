@@ -4,7 +4,7 @@
     <StackLayout Padding="10">
         <Label Text="Create Car" FontSize="Large" HorizontalOptions="Center" />
 
-        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" />
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" HeightRequest="70" />
 
         <Label Text="Select Guests" FontSize="Medium" />
         <CollectionView ItemsSource="{Binding Guests}" SelectionMode="Multiple" SelectedItems="{Binding SelectedGuests}">

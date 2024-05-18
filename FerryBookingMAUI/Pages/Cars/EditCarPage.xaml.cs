@@ -1,6 +1,9 @@
 using FerryBookingClassLibrary.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
 
 namespace FerryBookingMAUI.Pages
 {
@@ -16,8 +19,31 @@ namespace FerryBookingMAUI.Pages
         public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
         public ObservableCollection<Guest> Guests { get; set; } = new ObservableCollection<Guest>();
 
-        public Ferry SelectedFerry { get; set; }
-        public ObservableCollection<Guest> SelectedGuests { get; set; } = new ObservableCollection<Guest>();
+        private Ferry _selectedFerry;
+        public Ferry SelectedFerry
+        {
+            get => _selectedFerry;
+            set
+            {
+                _selectedFerry = value;
+                OnPropertyChanged();
+                if (_selectedFerry != null)
+                {
+                    _ = UpdateGuests();
+                }
+            }
+        }
+
+        private ObservableCollection<Guest> _selectedGuests = new ObservableCollection<Guest>();
+        public ObservableCollection<Guest> SelectedGuests
+        {
+            get => _selectedGuests;
+            set
+            {
+                _selectedGuests = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand SaveCommand { get; }
 
@@ -56,15 +82,35 @@ namespace FerryBookingMAUI.Pages
             }
 
             var car = await _carService.GetCarByIdAsync(CarId);
-            SelectedFerry = Ferries.FirstOrDefault(f => f.Id == car.FerryId);
-            foreach (var guest in car.Guests)
+            if (car != null)
             {
-                SelectedGuests.Add(Guests.First(g => g.Id == guest.Id));
+                SelectedFerry = Ferries.FirstOrDefault(f => f.Id == car.FerryId);
+                SelectedGuests.Clear();
+                foreach (var guest in car.Guests)
+                {
+                    SelectedGuests.Add(Guests.First(g => g.Id == guest.Id));
+                }
+            }
+        }
+
+        private async Task UpdateGuests()
+        {
+            var guests = await _guestService.GetGuestsByFerryAsync(SelectedFerry.Id);
+            Guests.Clear();
+            foreach (var guest in guests)
+            {
+                Guests.Add(guest);
             }
         }
 
         private async Task SaveCar()
         {
+            if (SelectedGuests.Count < 1 || SelectedGuests.Count > 5)
+            {
+                await DisplayAlert("Error", "The car must have at least 1 guest and a maximum of 5 guests.", "OK");
+                return;
+            }
+
             var car = new Car
             {
                 Id = CarId,

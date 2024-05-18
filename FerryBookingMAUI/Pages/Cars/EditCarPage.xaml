@@ -4,9 +4,13 @@
     <StackLayout Padding="10">
         <Label Text="Edit Car" FontSize="Large" HorizontalOptions="Center" />
 
-        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" />
+        <!-- Picker for selecting ferry -->
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" HeightRequest="70" />
 
+        <!-- Label for selecting guests -->
         <Label Text="Select Guests" FontSize="Medium" />
+
+        <!-- CollectionView for selecting guests -->
         <CollectionView ItemsSource="{Binding Guests}" SelectionMode="Multiple" SelectedItems="{Binding SelectedGuests}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -17,6 +21,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!-- Button for saving changes -->
         <Button Text="Save" Command="{Binding SaveCommand}" />
     </StackLayout>
 </ContentPage>

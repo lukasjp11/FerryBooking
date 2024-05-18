@@ -4,11 +4,11 @@
        x:Class="FerryBookingMAUI.AppShell">
 
     <TabBar>
-        <Tab Title="Cars">
-            <ShellContent ContentTemplate="{DataTemplate local:CarPage}" />
-        </Tab>
         <Tab Title="Ferries">
             <ShellContent ContentTemplate="{DataTemplate local:FerryPage}" />
+        </Tab>
+        <Tab Title="Cars">
+            <ShellContent ContentTemplate="{DataTemplate local:CarPage}" />
         </Tab>
         <Tab Title="Guests">
             <ShellContent ContentTemplate="{DataTemplate local:GuestPage}" />

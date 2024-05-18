@@ -10,9 +10,8 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
             <converters:BoolToGenderConverter x:Key="BoolToGenderConverter" />
-            <converters:MaxCarsConverter x:Key="MaxCarsConverter" />
-            <converters:MaxGuestsConverter x:Key="MaxGuestsConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

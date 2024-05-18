@@ -1,6 +1,9 @@
 using FerryBookingClassLibrary.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 
 namespace FerryBookingMAUI.Pages
 {
@@ -11,7 +14,6 @@ namespace FerryBookingMAUI.Pages
         public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
 
         public ICommand CreateFerryCommand { get; }
-        public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
 
@@ -21,7 +23,6 @@ namespace FerryBookingMAUI.Pages
             _ferryService = ferryService;
 
             CreateFerryCommand = new Command(async () => await CreateFerry());
-            DetailsCommand = new Command<Ferry>(async (ferry) => await ShowDetails(ferry));
             EditCommand = new Command<Ferry>(async (ferry) => await EditFerry(ferry));
             DeleteCommand = new Command<Ferry>(async (ferry) => await DeleteFerry(ferry));
 
@@ -40,6 +41,7 @@ namespace FerryBookingMAUI.Pages
             Ferries.Clear();
             foreach (var ferry in ferries)
             {
+                Debug.WriteLine($"Loaded Ferry: {ferry.Name}, Cars.Count: {ferry.Cars.Count}, Guests.Count: {ferry.Guests.Count}, MaxCars: {ferry.MaxCars}, MaxGuests: {ferry.MaxGuests}");
                 Ferries.Add(ferry);
             }
         }
@@ -47,11 +49,6 @@ namespace FerryBookingMAUI.Pages
         private async Task CreateFerry()
         {
             await Shell.Current.GoToAsync(nameof(CreateFerryPage));
-        }
-
-        private async Task ShowDetails(Ferry ferry)
-        {
-            await Shell.Current.GoToAsync($"{nameof(FerryDetailsPage)}?FerryId={ferry.Id}");
         }
 
         private async Task EditFerry(Ferry ferry)
