@@ -5,6 +5,7 @@
         <Label Text="Create Guest" FontSize="Large" HorizontalOptions="Center" />
 
         <Entry Placeholder="Name" Text="{Binding Guest.Name}" />
+        <Label Text="{Binding NameError}" TextColor="Red" IsVisible="{Binding IsNameErrorVisible}" />
 
         <Picker Title="Gender" SelectedItem="{Binding Guest.Gender}">
             <Picker.ItemsSource>
@@ -14,8 +15,10 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
+        <Label Text="{Binding GenderError}" TextColor="Red" IsVisible="{Binding IsGenderErrorVisible}" />
 
         <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" />
+        <Label Text="{Binding FerryError}" TextColor="Red" IsVisible="{Binding IsFerryErrorVisible}" />
 
         <Button Text="Create" Command="{Binding CreateCommand}" />
     </StackLayout>

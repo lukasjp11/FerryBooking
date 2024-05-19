@@ -6,18 +6,23 @@
 
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="Enter name" Text="{Binding Ferry.Name, Mode=TwoWay}" />
+        <Label Text="{Binding NameError}" TextColor="Red" IsVisible="{Binding IsNameErrorVisible}" />
 
         <Label Text="Max Cars" FontSize="Medium" />
         <Entry Placeholder="Enter max cars" Text="{Binding Ferry.MaxCars, Mode=TwoWay}" Keyboard="Numeric" />
+        <Label Text="{Binding MaxCarsError}" TextColor="Red" IsVisible="{Binding IsMaxCarsErrorVisible}" />
 
         <Label Text="Max Guests" FontSize="Medium" />
         <Entry Placeholder="Enter max guests" Text="{Binding Ferry.MaxGuests, Mode=TwoWay}" Keyboard="Numeric" />
+        <Label Text="{Binding MaxGuestsError}" TextColor="Red" IsVisible="{Binding IsMaxGuestsErrorVisible}" />
 
         <Label Text="Price per Car" FontSize="Medium" />
         <Entry Placeholder="Enter price per car" Text="{Binding Ferry.PricePerCar, Mode=TwoWay}" Keyboard="Numeric" />
+        <Label Text="{Binding PricePerCarError}" TextColor="Red" IsVisible="{Binding IsPricePerCarErrorVisible}" />
 
         <Label Text="Price per Guest" FontSize="Medium" />
         <Entry Placeholder="Enter price per guest" Text="{Binding Ferry.PricePerGuest, Mode=TwoWay}" Keyboard="Numeric" />
+        <Label Text="{Binding PricePerGuestError}" TextColor="Red" IsVisible="{Binding IsPricePerGuestErrorVisible}" />
 
         <Button Text="Save" Command="{Binding SaveCommand}" />
     </StackLayout>

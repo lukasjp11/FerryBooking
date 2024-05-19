@@ -6,6 +6,7 @@
 
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="Name" Text="{Binding Guest.Name}" />
+        <Label Text="{Binding NameError}" TextColor="Red" IsVisible="{Binding IsNameErrorVisible}" />
 
         <Label Text="Gender" FontSize="Medium" />
         <Picker Title="Gender" SelectedItem="{Binding Guest.Gender}"  HeightRequest="70">
@@ -16,9 +17,11 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
+        <Label Text="{Binding GenderError}" TextColor="Red" IsVisible="{Binding IsGenderErrorVisible}" />
 
         <Label Text="Select Ferry" FontSize="Medium" />
         <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" HeightRequest="70"/>
+        <Label Text="{Binding FerryError}" TextColor="Red" IsVisible="{Binding IsFerryErrorVisible}" />
 
         <Button Text="Save" Command="{Binding SaveCommand}" />
     </StackLayout>

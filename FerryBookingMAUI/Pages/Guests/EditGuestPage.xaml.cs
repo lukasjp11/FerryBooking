@@ -1,7 +1,12 @@
 using FerryBookingClassLibrary.Models;
+using FerryBookingMAUI.Helpers;
 using FerryBookingMAUI.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FerryBookingMAUI.Pages.Guests
 {
@@ -13,12 +18,39 @@ namespace FerryBookingMAUI.Pages.Guests
 
         public int GuestId { get; set; }
 
-        public Guest Guest { get; set; } = new Guest();
+        private Guest _guest = new Guest();
+        public Guest Guest
+        {
+            get => _guest;
+            set
+            {
+                _guest = value;
+                OnPropertyChanged(nameof(Guest));
+            }
+        }
+
         public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
 
-        public Ferry SelectedFerry { get; set; }
+        private Ferry _selectedFerry;
+        public Ferry SelectedFerry
+        {
+            get => _selectedFerry;
+            set
+            {
+                _selectedFerry = value;
+                OnPropertyChanged(nameof(SelectedFerry));
+            }
+        }
 
         public ICommand SaveCommand { get; }
+
+        public string NameError { get; set; }
+        public string GenderError { get; set; }
+        public string FerryError { get; set; }
+
+        public bool IsNameErrorVisible => !string.IsNullOrEmpty(NameError);
+        public bool IsGenderErrorVisible => !string.IsNullOrEmpty(GenderError);
+        public bool IsFerryErrorVisible => !string.IsNullOrEmpty(FerryError);
 
         public EditGuestPage(GuestService guestService, FerryService ferryService)
         {
@@ -52,15 +84,43 @@ namespace FerryBookingMAUI.Pages.Guests
         {
             Guest = await _guestService.GetGuestByIdAsync(GuestId);
             SelectedFerry = Ferries.FirstOrDefault(f => f.Id == Guest.FerryId);
-            // Gender should be directly bound and no need for conversion here
         }
 
         private async Task SaveGuest()
         {
+            if (SelectedFerry == null)
+            {
+                FerryError = "Please select a ferry.";
+                OnPropertyChanged(nameof(FerryError));
+                OnPropertyChanged(nameof(IsFerryErrorVisible));
+                return;
+            }
+
             Guest.FerryId = SelectedFerry.Id;
-            // Gender binding should directly save without conversion if bound properly
-            await _guestService.UpdateGuestAsync(GuestId, Guest);
-            await Navigation.PopAsync();
+
+            if (ValidateGuest())
+            {
+                await _guestService.UpdateGuestAsync(GuestId, Guest);
+                await Navigation.PopAsync();
+            }
+        }
+
+        private bool ValidateGuest()
+        {
+            var isValid = ValidatorHelper.TryValidateObject(Guest, out var validationResults);
+
+            NameError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Guest.Name)))?.ErrorMessage;
+            GenderError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Guest.Gender)))?.ErrorMessage;
+            FerryError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Guest.FerryId)))?.ErrorMessage;
+
+            OnPropertyChanged(nameof(NameError));
+            OnPropertyChanged(nameof(GenderError));
+            OnPropertyChanged(nameof(FerryError));
+            OnPropertyChanged(nameof(IsNameErrorVisible));
+            OnPropertyChanged(nameof(IsGenderErrorVisible));
+            OnPropertyChanged(nameof(IsFerryErrorVisible));
+
+            return isValid;
         }
     }
 }
