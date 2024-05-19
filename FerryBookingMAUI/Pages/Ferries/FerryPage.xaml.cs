@@ -40,7 +40,6 @@ namespace FerryBookingMAUI.Pages.Ferries
             Ferries.Clear();
             foreach (var ferry in ferries)
             {
-                Debug.WriteLine($"Loaded Ferry: {ferry.Name}, Cars.Count: {ferry.Cars.Count}, Guests.Count: {ferry.Guests.Count}, MaxCars: {ferry.MaxCars}, MaxGuests: {ferry.MaxGuests}");
                 Ferries.Add(ferry);
             }
         }
