@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FerryBookingMVC.Migrations
+namespace FerryBookingClassLibrary.Migrations
 {
-    [DbContext(typeof(FerryContext))]
-    [Migration("20240516123401_UpdateSeedData")]
-    partial class UpdateSeedData
+    [DbContext(typeof(DbContext))]
+    [Migration("20240519214341_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,8 @@ namespace FerryBookingMVC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PricePerCar")
                         .HasColumnType("int");
@@ -128,7 +129,7 @@ namespace FerryBookingMVC.Migrations
                     b.HasOne("FerryBookingClassLibrary.Models.Ferry", "Ferry")
                         .WithMany("Cars")
                         .HasForeignKey("FerryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ferry");
@@ -143,7 +144,7 @@ namespace FerryBookingMVC.Migrations
                     b.HasOne("FerryBookingClassLibrary.Models.Ferry", "Ferry")
                         .WithMany("Guests")
                         .HasForeignKey("FerryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ferry");

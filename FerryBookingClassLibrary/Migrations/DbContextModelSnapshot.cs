@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FerryBookingMVC.Migrations
+namespace FerryBookingClassLibrary.Migrations
 {
-    [DbContext(typeof(FerryContext))]
-    partial class FerryContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DbContext))]
+    partial class DbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -56,7 +56,8 @@ namespace FerryBookingMVC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PricePerCar")
                         .HasColumnType("int");
@@ -125,7 +126,7 @@ namespace FerryBookingMVC.Migrations
                     b.HasOne("FerryBookingClassLibrary.Models.Ferry", "Ferry")
                         .WithMany("Cars")
                         .HasForeignKey("FerryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ferry");
@@ -140,7 +141,7 @@ namespace FerryBookingMVC.Migrations
                     b.HasOne("FerryBookingClassLibrary.Models.Ferry", "Ferry")
                         .WithMany("Guests")
                         .HasForeignKey("FerryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ferry");

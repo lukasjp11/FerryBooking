@@ -3,13 +3,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FerryBookingClassLibrary.Data
 {
-    public class FerryContext : DbContext
+    public class FerryContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public FerryContext(DbContextOptions<FerryContext> options) : base(options) { }
+        public FerryContext() { }
 
         public DbSet<Ferry> Ferries { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Guest> Guests { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=FerryDB;User Id=sa;Password=Rbj93zpj!;TrustServerCertificate=True;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
