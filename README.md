@@ -87,6 +87,7 @@ API'en er udviklet til at fungere som backend for MAUI-applikationen. Den levere
 ## Brug
 ### API
 - Base URL: `https://localhost:7163`
+- Swagger URL: `https://localhost:7163/swagger/index.html`
 - Endpoints:
   - `/api/cars`
   - `/api/ferries`
