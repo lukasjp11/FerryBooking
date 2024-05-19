@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FerryBookingMAUI.Pages"
              xmlns:converters="clr-namespace:FerryBookingMAUI.Converters"
-             x:Class="FerryBookingMAUI.Pages.GuestPage">
+             x:Class="FerryBookingMAUI.Pages.Guests.GuestPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BoolToGenderConverter x:Key="BoolToGenderConverter" />

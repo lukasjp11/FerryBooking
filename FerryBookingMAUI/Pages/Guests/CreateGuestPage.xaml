@@ -1,6 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FerryBookingMAUI.Pages.CreateGuestPage">
+             x:Class="FerryBookingMAUI.Pages.Guests.CreateGuestPage">
     <StackLayout Padding="10">
         <Label Text="Create Guest" FontSize="Large" HorizontalOptions="Center" />
 

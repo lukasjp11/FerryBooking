@@ -1,11 +1,9 @@
 using FerryBookingClassLibrary.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 
-namespace FerryBookingMAUI.Pages
+namespace FerryBookingMAUI.Pages.Ferries
 {
     public partial class FerryPage : ContentPage
     {

@@ -1,7 +1,7 @@
 using FerryBookingClassLibrary.Models;
 using System.Windows.Input;
 
-namespace FerryBookingMAUI.Pages
+namespace FerryBookingMAUI.Pages.Ferries
 {
     public partial class CreateFerryPage : ContentPage
     {

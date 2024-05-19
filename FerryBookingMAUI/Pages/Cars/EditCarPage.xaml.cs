@@ -1,11 +1,8 @@
 using FerryBookingClassLibrary.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
 
-namespace FerryBookingMAUI.Pages
+namespace FerryBookingMAUI.Pages.Cars
 {
     [QueryProperty(nameof(CarId), nameof(CarId))]
     public partial class EditCarPage : ContentPage

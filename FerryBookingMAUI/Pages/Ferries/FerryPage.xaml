@@ -1,7 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FerryBookingMAUI.Pages"
-             x:Class="FerryBookingMAUI.Pages.FerryPage">
+             x:Class="FerryBookingMAUI.Pages.Ferries.FerryPage">
     <StackLayout>
         <Label Text="Ferries" FontSize="Large" HorizontalOptions="Center" />
 

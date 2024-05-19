@@ -2,7 +2,7 @@ using FerryBookingClassLibrary.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace FerryBookingMAUI.Pages
+namespace FerryBookingMAUI.Pages.Cars
 {
     public partial class CreateCarPage : ContentPage
     {

@@ -1,7 +1,7 @@
 using FerryBookingClassLibrary.Models;
 using System.Windows.Input;
 
-namespace FerryBookingMAUI.Pages
+namespace FerryBookingMAUI.Pages.Ferries
 {
     [QueryProperty(nameof(FerryId), nameof(FerryId))]
     public partial class EditFerryPage : ContentPage

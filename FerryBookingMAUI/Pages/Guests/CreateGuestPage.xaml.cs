@@ -1,9 +1,8 @@
 using FerryBookingClassLibrary.Models;
-
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace FerryBookingMAUI.Pages
+namespace FerryBookingMAUI.Pages.Guests
 {
     public partial class CreateGuestPage : ContentPage
     {
