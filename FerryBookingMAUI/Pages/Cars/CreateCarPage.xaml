@@ -4,10 +4,12 @@
     <StackLayout Padding="10">
         <Label Text="Create Car" FontSize="Large" HorizontalOptions="Center" />
 
+        <Label Text="Select Ferry" FontSize="Medium" />
         <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" HeightRequest="70" />
+        <Label Text="{Binding FerryError}" TextColor="Red" IsVisible="{Binding IsFerryErrorVisible}" />
 
         <Label Text="Select Guests" FontSize="Medium" />
-        <CollectionView ItemsSource="{Binding Guests}" SelectionMode="Multiple" SelectedItems="{Binding SelectedGuests}">
+        <CollectionView ItemsSource="{Binding AvailableGuests}" SelectionMode="Multiple" SelectionChanged="OnSelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>

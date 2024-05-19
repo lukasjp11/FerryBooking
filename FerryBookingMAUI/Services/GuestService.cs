@@ -51,6 +51,5 @@ namespace FerryBookingMAUI.Services
                 PropertyNameCaseInsensitive = true
             });
         }
-
     }
 }

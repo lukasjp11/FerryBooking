@@ -1,6 +1,9 @@
 using FerryBookingClassLibrary.Models;
 using FerryBookingMAUI.Services;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FerryBookingMAUI.Pages.Cars
@@ -15,7 +18,7 @@ namespace FerryBookingMAUI.Pages.Cars
         public int CarId { get; set; }
 
         public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
-        public ObservableCollection<Guest> Guests { get; set; } = new ObservableCollection<Guest>();
+        public ObservableCollection<Guest> AvailableGuests { get; set; } = new ObservableCollection<Guest>();
 
         private Ferry _selectedFerry;
         public Ferry SelectedFerry
@@ -27,23 +30,18 @@ namespace FerryBookingMAUI.Pages.Cars
                 OnPropertyChanged();
                 if (_selectedFerry != null)
                 {
-                    _ = UpdateGuests();
+                    _ = UpdateAvailableGuests();
                 }
+                ValidateSelectedFerry();
             }
         }
 
-        private ObservableCollection<Guest> _selectedGuests = new ObservableCollection<Guest>();
-        public ObservableCollection<Guest> SelectedGuests
-        {
-            get => _selectedGuests;
-            set
-            {
-                _selectedGuests = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<Guest> SelectedGuests { get; set; } = new ObservableCollection<Guest>();
 
         public ICommand SaveCommand { get; }
+
+        public string FerryError { get; set; }
+        public bool IsFerryErrorVisible => !string.IsNullOrEmpty(FerryError);
 
         public EditCarPage(CarService carService, FerryService ferryService, GuestService guestService)
         {
@@ -55,6 +53,15 @@ namespace FerryBookingMAUI.Pages.Cars
             SaveCommand = new Command(async () => await SaveCar());
 
             BindingContext = this;
+
+            // Log collection changes
+            SelectedGuests.CollectionChanged += (sender, args) => {
+                Debug.WriteLine("SelectedGuests collection changed:");
+                foreach (var guest in SelectedGuests)
+                {
+                    Debug.WriteLine($"Selected Guest: {guest.Name} (ID: {guest.Id})");
+                }
+            };
         }
 
         protected override async void OnAppearing()
@@ -72,13 +79,6 @@ namespace FerryBookingMAUI.Pages.Cars
                 Ferries.Add(ferry);
             }
 
-            var guests = await _guestService.GetGuestsAsync();
-            Guests.Clear();
-            foreach (var guest in guests)
-            {
-                Guests.Add(guest);
-            }
-
             var car = await _carService.GetCarByIdAsync(CarId);
             if (car != null)
             {
@@ -86,19 +86,32 @@ namespace FerryBookingMAUI.Pages.Cars
                 SelectedGuests.Clear();
                 foreach (var guest in car.Guests)
                 {
-                    SelectedGuests.Add(Guests.First(g => g.Id == guest.Id));
+                    SelectedGuests.Add(guest);
                 }
             }
+
+            await UpdateAvailableGuests();
         }
 
-        private async Task UpdateGuests()
+        private async Task UpdateAvailableGuests()
         {
+            if (SelectedFerry == null) return;
+
             var guests = await _guestService.GetGuestsByFerryAsync(SelectedFerry.Id);
-            Guests.Clear();
+            var cars = await _carService.GetCarsAsync();
+
+            var assignedGuests = cars.Where(c => c.Id != CarId).SelectMany(car => car.Guests).Select(g => g.Id).ToHashSet();
+
+            AvailableGuests.Clear();
             foreach (var guest in guests)
             {
-                Guests.Add(guest);
+                if (!assignedGuests.Contains(guest.Id) || SelectedGuests.Any(g => g.Id == guest.Id))
+                {
+                    AvailableGuests.Add(guest);
+                }
             }
+
+            ValidateSelectedFerry();
         }
 
         private async Task SaveCar()
@@ -118,6 +131,30 @@ namespace FerryBookingMAUI.Pages.Cars
 
             await _carService.UpdateCarAsync(CarId, car);
             await Navigation.PopAsync();
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedGuests.Clear();
+            foreach (var item in e.CurrentSelection)
+            {
+                SelectedGuests.Add(item as Guest);
+            }
+        }
+
+        private void ValidateSelectedFerry()
+        {
+            if (SelectedFerry != null && AvailableGuests.Count == 0)
+            {
+                FerryError = "The selected ferry has no guests.";
+            }
+            else
+            {
+                FerryError = null;
+            }
+
+            OnPropertyChanged(nameof(FerryError));
+            OnPropertyChanged(nameof(IsFerryErrorVisible));
         }
     }
 }

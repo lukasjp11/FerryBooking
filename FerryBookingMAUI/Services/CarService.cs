@@ -1,4 +1,6 @@
 using FerryBookingClassLibrary.Models;
+using FerryBookingClassLibrary.ViewModels;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace FerryBookingMAUI.Services
@@ -40,19 +42,35 @@ namespace FerryBookingMAUI.Services
 
         public async Task CreateCarAsync(Car car)
         {
-            var content = new StringContent(JsonSerializer.Serialize(car), System.Text.Encoding.UTF8, "application/json");
-            await _httpClient.PostAsync("https://localhost:7163/api/cars", content);
+            var carViewModel = new CarViewModel
+            {
+                FerryId = car.FerryId,
+                SelectedGuestIds = car.Guests.Select(g => g.Id).ToList()
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(carViewModel), System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("https://localhost:7163/api/cars", content);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateCarAsync(int id, Car car)
         {
-            var content = new StringContent(JsonSerializer.Serialize(car), System.Text.Encoding.UTF8, "application/json");
-            await _httpClient.PutAsync($"https://localhost:7163/api/cars/{id}", content);
+            var carViewModel = new CarViewModel
+            {
+                Id = car.Id,
+                FerryId = car.FerryId,
+                SelectedGuestIds = car.Guests.Select(g => g.Id).ToList()
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(carViewModel), System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"https://localhost:7163/api/cars/{id}", content);
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteCarAsync(int id)
         {
-            await _httpClient.DeleteAsync($"https://localhost:7163/api/cars/{id}");
+            var response = await _httpClient.DeleteAsync($"https://localhost:7163/api/cars/{id}");
+            response.EnsureSuccessStatusCode();
         }
     }
 }

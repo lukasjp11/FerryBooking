@@ -26,7 +26,7 @@ namespace FerryBookingAPI.Controllers
             return await _context.Guests.ToListAsync();
         }
 
-        // GET: api/Guests/5
+        // GET: api/Guests/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Guest>> GetGuest(int id)
         {
@@ -39,7 +39,7 @@ namespace FerryBookingAPI.Controllers
             return guest;
         }
 
-        // PUT: api/Guests/5
+        // PUT: api/Guests/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGuest(int id, Guest guest)
         {
@@ -79,7 +79,7 @@ namespace FerryBookingAPI.Controllers
             return CreatedAtAction(nameof(GetGuest), new { id = guest.Id }, guest);
         }
 
-        // DELETE: api/Guests/5
+        // DELETE: api/Guests/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGuest(int id)
         {
@@ -98,6 +98,12 @@ namespace FerryBookingAPI.Controllers
         private bool GuestExists(int id)
         {
             return _context.Guests.Any(e => e.Id == id);
+        }
+
+        [HttpGet("byferry/{ferryId}")]
+        public async Task<ActionResult<IEnumerable<Guest>>> GetGuestsByFerry(int ferryId)
+        {
+            return await _context.Guests.Where(g => g.FerryId == ferryId).ToListAsync();
         }
     }
 }

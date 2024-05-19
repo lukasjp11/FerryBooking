@@ -27,7 +27,7 @@ namespace FerryBookingAPI.Controllers
             return await _context.Cars.Include(c => c.Guests).ToListAsync();
         }
 
-        // GET: api/Cars/5
+        // GET: api/Cars/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(int id)
         {
@@ -44,7 +44,29 @@ namespace FerryBookingAPI.Controllers
             return car;
         }
 
-        // PUT: api/Cars/5
+        // POST: api/Cars
+        [HttpPost]
+        public async Task<ActionResult<Car>> PostCar(CarViewModel carViewModel)
+        {
+            if (carViewModel.SelectedGuestIds.Count < 1 || carViewModel.SelectedGuestIds.Count > 5)
+            {
+                ModelState.AddModelError("SelectedGuestIds", "The car must have at least 1 guest and a maximum of 5 guests.");
+                return BadRequest(ModelState);
+            }
+
+            var car = new Car
+            {
+                FerryId = carViewModel.FerryId,
+                Guests = _context.Guests.Where(g => carViewModel.SelectedGuestIds.Contains(g.Id)).ToList()
+            };
+
+            _context.Cars.Add(car);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetCar), new { id = car.Id }, car);
+        }
+
+        // PUT: api/Cars/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCar(int id, CarViewModel carViewModel)
         {
@@ -85,6 +107,22 @@ namespace FerryBookingAPI.Controllers
                     throw;
                 }
             }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Cars/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCar(int id)
+        {
+            var car = await _context.Cars.FindAsync(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }

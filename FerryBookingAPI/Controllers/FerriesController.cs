@@ -30,7 +30,7 @@ namespace FerryBookingAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Ferries/5
+        // GET: api/Ferries/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Ferry>> GetFerry(int id)
         {
@@ -48,7 +48,7 @@ namespace FerryBookingAPI.Controllers
             return ferry;
         }
 
-        // PUT: api/Ferries/5
+        // PUT: api/Ferries/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFerry(int id, Ferry ferry)
         {
@@ -88,7 +88,7 @@ namespace FerryBookingAPI.Controllers
             return CreatedAtAction(nameof(GetFerry), new { id = ferry.Id }, ferry);
         }
 
-        // DELETE: api/Ferries/5
+        // DELETE: api/Ferries/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFerry(int id)
         {
