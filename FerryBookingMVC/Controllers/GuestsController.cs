@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FerryBookingClassLibrary;
 using FerryBookingClassLibrary.Models;
-using FerryBookingMVC.Models;
+using FerryBookingClassLibrary.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 

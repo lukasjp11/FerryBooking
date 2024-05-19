@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FerryBookingClassLibrary.Models;
-using FerryBookingMVC.Models;
+using FerryBookingClassLibrary.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FerryBookingClassLibrary.ViewModels;
 
 namespace FerryBookingMVC.Controllers
 {
