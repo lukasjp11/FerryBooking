@@ -1,46 +1,46 @@
-﻿using FerryBookingMAUI.Pages;
-using FerryBookingMAUI.Pages.Cars;
+﻿using FerryBookingMAUI.Pages.Cars;
 using FerryBookingMAUI.Pages.Ferries;
 using FerryBookingMAUI.Pages.Guests;
 
-namespace FerryBookingMAUI;
-
-public static class MauiProgram
+namespace FerryBookingMAUI
 {
-    public static MauiApp CreateMauiApp()
+    public static class MauiProgram
     {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
+
+            builder.Services.AddHttpClient<CarService>(client =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                client.BaseAddress = new Uri("https://localhost:7163/");
+            });
+            builder.Services.AddHttpClient<FerryService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7163/");
+            });
+            builder.Services.AddHttpClient<GuestService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7163/");
             });
 
-        builder.Services.AddHttpClient<CarService>(client =>
-        {
-            client.BaseAddress = new Uri("https://localhost:7163/");
-        });
-        builder.Services.AddHttpClient<FerryService>(client =>
-        {
-            client.BaseAddress = new Uri("https://localhost:7163/");
-        });
-        builder.Services.AddHttpClient<GuestService>(client =>
-        {
-            client.BaseAddress = new Uri("https://localhost:7163/");
-        });
+            builder.Services.AddSingleton<CarPage>();
+            builder.Services.AddSingleton<FerryPage>();
+            builder.Services.AddSingleton<GuestPage>();
+            builder.Services.AddTransient<CreateCarPage>();
+            builder.Services.AddTransient<EditCarPage>();
+            builder.Services.AddTransient<CreateFerryPage>();
+            builder.Services.AddTransient<EditFerryPage>();
+            builder.Services.AddTransient<CreateGuestPage>();
+            builder.Services.AddTransient<EditGuestPage>();
 
-        builder.Services.AddSingleton<CarPage>();
-        builder.Services.AddSingleton<FerryPage>();
-        builder.Services.AddSingleton<GuestPage>();
-        builder.Services.AddTransient<CreateCarPage>();
-        builder.Services.AddTransient<EditCarPage>();
-        builder.Services.AddTransient<CreateFerryPage>();
-        builder.Services.AddTransient<EditFerryPage>();
-        builder.Services.AddTransient<CreateGuestPage>();
-        builder.Services.AddTransient<EditGuestPage>();
-
-        return builder.Build();
+            return builder.Build();
+        }
     }
 }
