@@ -26,6 +26,7 @@ namespace FerryBookingMAUI.Pages.Guests
             {
                 _guest = value;
                 OnPropertyChanged(nameof(Guest));
+                SelectedGender = _guest.Gender ? "Female" : "Male";
             }
         }
 
@@ -39,6 +40,18 @@ namespace FerryBookingMAUI.Pages.Guests
             {
                 _selectedFerry = value;
                 OnPropertyChanged(nameof(SelectedFerry));
+            }
+        }
+
+        private string _selectedGender;
+        public string SelectedGender
+        {
+            get => _selectedGender;
+            set
+            {
+                _selectedGender = value;
+                Guest.Gender = _selectedGender == "Female";
+                OnPropertyChanged(nameof(SelectedGender));
             }
         }
 
@@ -84,6 +97,7 @@ namespace FerryBookingMAUI.Pages.Guests
         {
             Guest = await _guestService.GetGuestByIdAsync(GuestId);
             SelectedFerry = Ferries.FirstOrDefault(f => f.Id == Guest.FerryId);
+            SelectedGender = Guest.Gender ? "Female" : "Male";
         }
 
         private async Task SaveGuest()

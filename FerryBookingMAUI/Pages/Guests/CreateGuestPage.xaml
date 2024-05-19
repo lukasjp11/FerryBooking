@@ -5,11 +5,11 @@
         <Label Text="Create Guest" FontSize="Large" HorizontalOptions="Center" />
 
         <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="Name" Text="{Binding Guest.Name}" />
+        <Entry Placeholder="Name" Text="{Binding Guest.Name, Mode=TwoWay}" />
         <Label Text="{Binding NameError}" TextColor="Red" IsVisible="{Binding IsNameErrorVisible}" />
 
         <Label Text="Gender" FontSize="Medium" />
-        <Picker Title="Gender" SelectedItem="{Binding Guest.Gender}" HeightRequest="70">
+        <Picker Title="Gender" SelectedItem="{Binding SelectedGender, Mode=TwoWay}" HeightRequest="70">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Male</x:String>
@@ -20,7 +20,7 @@
         <Label Text="{Binding GenderError}" TextColor="Red" IsVisible="{Binding IsGenderErrorVisible}" />
 
         <Label Text="Select Ferry" FontSize="Medium" />
-        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" HeightRequest="70" />
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry, Mode=TwoWay}" HeightRequest="70" />
         <Label Text="{Binding FerryError}" TextColor="Red" IsVisible="{Binding IsFerryErrorVisible}" />
 
         <Button Text="Create" Command="{Binding CreateCommand}" />

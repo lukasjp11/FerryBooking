@@ -38,6 +38,18 @@ namespace FerryBookingMAUI.Pages.Guests
             }
         }
 
+        private string _selectedGender;
+        public string SelectedGender
+        {
+            get => _selectedGender;
+            set
+            {
+                _selectedGender = value;
+                Guest.Gender = _selectedGender == "Female";
+                OnPropertyChanged(nameof(SelectedGender));
+            }
+        }
+
         public ICommand CreateCommand { get; }
 
         public string NameError { get; set; }
