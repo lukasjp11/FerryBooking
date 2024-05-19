@@ -86,7 +86,7 @@ API'en er udviklet til at fungere som backend for MAUI-applikationen. Den levere
 
 ## Brug
 ### API
-- Base URL: `http://localhost:7163`
+- Base URL: `https://localhost:7163`
 - Endpoints:
   - `/api/cars`
   - `/api/ferries`
