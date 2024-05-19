@@ -18,7 +18,6 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Register HttpClient and services
         builder.Services.AddHttpClient<CarService>(client =>
         {
             client.BaseAddress = new Uri("https://localhost:7163/");
@@ -32,7 +31,6 @@ public static class MauiProgram
             client.BaseAddress = new Uri("https://localhost:7163/");
         });
 
-        // Register pages
         builder.Services.AddSingleton<CarPage>();
         builder.Services.AddSingleton<FerryPage>();
         builder.Services.AddSingleton<GuestPage>();
