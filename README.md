@@ -1,4 +1,4 @@
-# FerryBooking System README
+# FerryBooking
 
 ## Projektbeskrivelse
 Dette projekt er udviklet som en del af min eksamensopgave på datamatikeruddannelsen i faget C#. Systemet er designet til at administrere booking af biler og gæster på en færge. Projektet indeholder en MVC-applikation, en MAUI-applikation og en API, der alle arbejder sammen for at levere en komplet løsning.
