@@ -43,6 +43,9 @@ namespace FerryBookingMAUI.Pages.Cars
         public string FerryError { get; set; }
         public bool IsFerryErrorVisible => !string.IsNullOrEmpty(FerryError);
 
+        public string GuestsError { get; set; }
+        public bool IsGuestsErrorVisible => !string.IsNullOrEmpty(GuestsError);
+
         public EditCarPage(CarService carService, FerryService ferryService, GuestService guestService)
         {
             InitializeComponent();
@@ -53,15 +56,6 @@ namespace FerryBookingMAUI.Pages.Cars
             SaveCommand = new Command(async () => await SaveCar());
 
             BindingContext = this;
-
-            // Log collection changes
-            SelectedGuests.CollectionChanged += (sender, args) => {
-                Debug.WriteLine("SelectedGuests collection changed:");
-                foreach (var guest in SelectedGuests)
-                {
-                    Debug.WriteLine($"Selected Guest: {guest.Name} (ID: {guest.Id})");
-                }
-            };
         }
 
         protected override async void OnAppearing()
@@ -118,7 +112,9 @@ namespace FerryBookingMAUI.Pages.Cars
         {
             if (SelectedGuests.Count < 1 || SelectedGuests.Count > 5)
             {
-                await DisplayAlert("Error", "The car must have at least 1 guest and a maximum of 5 guests.", "OK");
+                GuestsError = "The car must have at least 1 guest and a maximum of 5 guests.";
+                OnPropertyChanged(nameof(GuestsError));
+                OnPropertyChanged(nameof(IsGuestsErrorVisible));
                 return;
             }
 
@@ -144,14 +140,7 @@ namespace FerryBookingMAUI.Pages.Cars
 
         private void ValidateSelectedFerry()
         {
-            if (SelectedFerry != null && AvailableGuests.Count == 0)
-            {
-                FerryError = "The selected ferry has no guests.";
-            }
-            else
-            {
-                FerryError = null;
-            }
+            FerryError = AvailableGuests.Count == 0 ? "The selected ferry has no guests." : null;
 
             OnPropertyChanged(nameof(FerryError));
             OnPropertyChanged(nameof(IsFerryErrorVisible));
