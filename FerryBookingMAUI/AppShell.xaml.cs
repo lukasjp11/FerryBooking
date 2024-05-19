@@ -10,6 +10,7 @@ namespace FerryBookingMAUI
         public AppShell()
         {
             InitializeComponent();
+            this.Title = "FerryBooking";
             Routing.RegisterRoute(nameof(CreateCarPage), typeof(CreateCarPage));
             Routing.RegisterRoute(nameof(EditCarPage), typeof(EditCarPage));
             Routing.RegisterRoute(nameof(CreateFerryPage), typeof(CreateFerryPage));
