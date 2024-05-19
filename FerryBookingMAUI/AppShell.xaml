@@ -1,6 +1,5 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:FerryBookingMAUI.Pages"
        xmlns:cars="using:FerryBookingMAUI.Pages.Cars"
        xmlns:ferries="using:FerryBookingMAUI.Pages.Ferries"
        xmlns:guests="using:FerryBookingMAUI.Pages.Guests"

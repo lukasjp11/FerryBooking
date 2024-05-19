@@ -1,6 +1,7 @@
 ﻿using FerryBookingMAUI.Pages.Cars;
 using FerryBookingMAUI.Pages.Ferries;
 using FerryBookingMAUI.Pages.Guests;
+using FerryBookingMAUI.Services;
 
 namespace FerryBookingMAUI
 {
