@@ -5,7 +5,7 @@ Dette projekt er udviklet som en del af min eksamensopgave på datamatikeruddann
 
 ## MVC Applikation
 ### Oversigt
-MVC-applikationen er den del af projektet, jeg er mest stolt af. Den er udviklet ved hjælp af ASP.NET Core MVC og Razor views. Applikationen giver brugerne mulighed for at administrere biler, gæster og færger gennem en brugervenlig webgrænseflade.
+MVC-applikationen er udviklet ved hjælp af ASP.NET Core MVC og Razor views. Applikationen giver brugerne mulighed for at administrere biler, gæster og færger gennem en brugervenlig webgrænseflade.
 
 ### Funktioner
 - **CRUD-operationer**: Tilføj, opdater, slet og vis biler, gæster og færger.
