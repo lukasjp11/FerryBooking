@@ -28,11 +28,11 @@ MVC-applikationen er udviklet ved hjælp af ASP.NET Core MVC og Razor views. App
   - `ErrorViewModel.cs`
 
 ### Skærmbillede
-![MVC UI](path/to/mvc_ui_image.png)
+![MVC UI](Images\mvc_ui.png)
 
 ## MAUI Applikation
 ### Oversigt
-MAUI-applikationen er udviklet til at give en mobil oplevelse for brugere, der ønsker at administrere færgebookinger fra deres mobile enheder. Den bruger MAUI frameworket til at levere en cross-platform løsning.
+MAUI-applikationen er udviklet til at give en brugervenlig oplevelse for dem, der ønsker at administrere færgebookinger fra deres computere.
 
 ### Funktioner
 - **CRUD-operationer**: Tilføj, opdater, slet og vis biler, gæster og færger.
@@ -54,11 +54,11 @@ MAUI-applikationen er udviklet til at give en mobil oplevelse for brugere, der �
   - `BoolToGenderConverter.cs`
 
 ### Skærmbillede
-![MAUI UI](path/to/maui_ui_image.png)
+![MAUI UI](Images\maui_ui.png)
 
 ## FerryBooking API
 ### Oversigt
-API'en er udviklet til at fungere som backend for både MVC- og MAUI-applikationerne. Den leverer dataadgang og forretningslogik via HTTP endpoints.
+API'en er udviklet til at fungere som backend for MAUI-applikationen. Den leverer dataadgang og forretningslogik via HTTP endpoints.
 
 ### Struktur
 - **Controllers**
@@ -86,24 +86,14 @@ API'en er udviklet til at fungere som backend for både MVC- og MAUI-applikation
 
 ## Brug
 ### API
-- Base URL: `http://localhost:5000`
+- Base URL: `http://localhost:7163`
 - Endpoints:
   - `/api/cars`
   - `/api/ferries`
   - `/api/guests`
 
 ### MAUI App
-- Naviger mellem siderne for at tilføje, redigere og slette biler og gæster.
+- Naviger mellem siderne for at tilføje, redigere og slette biler, færger og gæster.
 
 ### MVC App
 - Brug menuen til at navigere mellem biler, færger og gæster. Brug CRUD-funktioner til at administrere data.
-
-## Teknologier
-- C#
-- .NET 6
-- Entity Framework Core
-- MAUI
-- ASP.NET Core MVC
-
-## Forfatter
-[Dit navn]
