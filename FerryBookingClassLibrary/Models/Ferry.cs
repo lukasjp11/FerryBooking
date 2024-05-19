@@ -14,16 +14,16 @@ namespace FerryBookingClassLibrary.Models
         [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Max Cars must be a positive number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Max Cars must be a non-negative number.")]
         public int MaxCars { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Max Guests must be a positive number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Max Guests must be a non-negative number.")]
         public int MaxGuests { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Price per Car must be a non-negative number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Price per Car must be a non-negative number.")]
         public int PricePerGuest { get; set; } = 99;
 
-        [Range(0, double.MaxValue, ErrorMessage = "Price per Guest must be a non-negative number.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Price per Guest must be a non-negative number.")]
         public int PricePerCar { get; set; } = 197;
 
         [JsonIgnore]
