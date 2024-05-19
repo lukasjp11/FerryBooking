@@ -28,7 +28,7 @@ MVC-applikationen er udviklet ved hjælp af ASP.NET Core MVC og Razor views. App
   - `ErrorViewModel.cs`
 
 ### Skærmbillede
-![MVC UI](Images\mvc_ui.png)
+![MVC UI](FerryBooking\Images\mvc_ui.png)
 
 ## MAUI Applikation
 ### Oversigt
@@ -54,7 +54,7 @@ MAUI-applikationen er udviklet til at give en brugervenlig oplevelse for dem, de
   - `BoolToGenderConverter.cs`
 
 ### Skærmbillede
-![MAUI UI](Images\maui_ui.png)
+![MAUI UI](FerryBooking\Images\maui_ui.png)
 
 ## FerryBooking API
 ### Oversigt
