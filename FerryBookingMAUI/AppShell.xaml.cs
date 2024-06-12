@@ -1,5 +1,4 @@
-﻿using FerryBookingMAUI.Pages;
-using FerryBookingMAUI.Pages.Cars;
+﻿using FerryBookingMAUI.Pages.Cars;
 using FerryBookingMAUI.Pages.Ferries;
 using FerryBookingMAUI.Pages.Guests;
 
@@ -10,7 +9,7 @@ namespace FerryBookingMAUI
         public AppShell()
         {
             InitializeComponent();
-            this.Title = "FerryBooking";
+            Title = "FerryBooking";
             Routing.RegisterRoute(nameof(CreateCarPage), typeof(CreateCarPage));
             Routing.RegisterRoute(nameof(EditCarPage), typeof(EditCarPage));
             Routing.RegisterRoute(nameof(CreateFerryPage), typeof(CreateFerryPage));

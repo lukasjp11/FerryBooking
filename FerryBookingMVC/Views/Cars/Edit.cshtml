@@ -1,7 +1,8 @@
-﻿@model FerryBookingClassLibrary.ViewModels.CarViewModel
+﻿@using Newtonsoft.Json
+@model FerryBookingClassLibrary.ViewModels.CarViewModel
 
 @{
-ViewData["Title"] = "Edit Car";
+    ViewData["Title"] = "Edit Car";
 }
 
 <h2>Edit Car</h2>
@@ -15,26 +16,30 @@ ViewData["Title"] = "Edit Car";
         <h4>Edit Car ID: @Model.Id</h4>
     </div>
     <form asp-action="Edit" method="post">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Id"/>
         <div class="card-body">
             <div class="form-group row">
-                <label asp-for="FerryId" class="col-sm-3 control-label"><h5>Ferry:</h5></label>
+                <label asp-for="FerryId" class="col-sm-3 control-label">
+                    <h5>Ferry:</h5>
+                </label>
                 <div class="col-sm-9">
                     <select asp-for="FerryId" class="form-control" asp-items="ViewBag.Ferries" id="ferry-select"></select>
                     <span asp-validation-for="FerryId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-3 control-label"><h5>Guests:</h5></label>
+                <label class="col-sm-3 control-label">
+                    <h5>Guests:</h5>
+                </label>
                 <div class="col-sm-9">
                     <div class="card p-3" style="max-height: 300px; overflow-y: auto;">
                         <div id="guests-container">
                             @foreach (var guest in ViewBag.Guests)
                             {
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id" @(Model.SelectedGuestIds.Contains(guest.Id) ? "checked" : "") />
-                                <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
-                            </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SelectedGuestIds" value="@guest.Id" id="guest_@guest.Id" @(Model.SelectedGuestIds.Contains(guest.Id) ? "checked" : "")/>
+                                    <label class="form-check-label" for="guest_@guest.Id">@guest.Name (@guest.Id)</label>
+                                </div>
                             }
                         </div>
                     </div>
@@ -50,17 +55,17 @@ ViewData["Title"] = "Edit Car";
 </div>
 
 @section Scripts {
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
-<script>
+    <script>
     $(document).ready(function() {
         var carId = @Html.Raw(Model.Id);
         var selectedGuestsByFerry = {};
         var currentFerryId = $('#ferry-select').val();
 
-        selectedGuestsByFerry[currentFerryId] = new Set(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.SelectedGuestIds)));
+        selectedGuestsByFerry[currentFerryId] = new Set(@Html.Raw(JsonConvert.SerializeObject(Model.SelectedGuestIds)));
 
         $('#ferry-select').change(function() {
             saveCurrentSelections();

@@ -3,9 +3,6 @@ using FerryBookingClassLibrary.Models;
 using FerryBookingClassLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FerryBookingAPI.Controllers
 {
@@ -31,7 +28,7 @@ namespace FerryBookingAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(int id)
         {
-            var car = await _context.Cars
+            Car? car = await _context.Cars
                 .Include(c => c.Guests)
                 .Include(c => c.Ferry)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -50,11 +47,12 @@ namespace FerryBookingAPI.Controllers
         {
             if (carViewModel.SelectedGuestIds.Count < 1 || carViewModel.SelectedGuestIds.Count > 5)
             {
-                ModelState.AddModelError("SelectedGuestIds", "The car must have at least 1 guest and a maximum of 5 guests.");
+                ModelState.AddModelError("SelectedGuestIds",
+                    "The car must have at least 1 guest and a maximum of 5 guests.");
                 return BadRequest(ModelState);
             }
 
-            var car = new Car
+            Car car = new Car
             {
                 FerryId = carViewModel.FerryId,
                 Guests = _context.Guests.Where(g => carViewModel.SelectedGuestIds.Contains(g.Id)).ToList()
@@ -77,11 +75,12 @@ namespace FerryBookingAPI.Controllers
 
             if (carViewModel.SelectedGuestIds.Count < 1 || carViewModel.SelectedGuestIds.Count > 5)
             {
-                ModelState.AddModelError("SelectedGuestIds", "The car must have at least 1 guest and a maximum of 5 guests.");
+                ModelState.AddModelError("SelectedGuestIds",
+                    "The car must have at least 1 guest and a maximum of 5 guests.");
                 return BadRequest(ModelState);
             }
 
-            var car = await _context.Cars.Include(c => c.Guests).FirstOrDefaultAsync(m => m.Id == id);
+            Car? car = await _context.Cars.Include(c => c.Guests).FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
                 return NotFound();
@@ -102,10 +101,8 @@ namespace FerryBookingAPI.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return NoContent();
@@ -115,7 +112,7 @@ namespace FerryBookingAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar(int id)
         {
-            var car = await _context.Cars.FindAsync(id);
+            Car? car = await _context.Cars.FindAsync(id);
             if (car == null)
             {
                 return NotFound();

@@ -1,6 +1,7 @@
 using FerryBookingClassLibrary.Models;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace FerryBookingMAUI.Services
 {
@@ -41,15 +42,16 @@ namespace FerryBookingMAUI.Services
 
         public async Task<IEnumerable<Guest>> GetGuestsByFerryAsync(int ferryId)
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7163/api/guests/byferry/{ferryId}");
+            HttpResponseMessage response =
+                await _httpClient.GetAsync($"https://localhost:7163/api/guests/byferry/{ferryId}");
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<IEnumerable<Guest>>(content, new JsonSerializerOptions
-            {
-                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
-                PropertyNameCaseInsensitive = true
-            });
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<Guest>>(content,
+                new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.IgnoreCycles, PropertyNameCaseInsensitive = true
+                });
         }
     }
 }

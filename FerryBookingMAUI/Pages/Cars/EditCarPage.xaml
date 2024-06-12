@@ -5,11 +5,13 @@
         <Label Text="Edit Car" FontSize="Large" HorizontalOptions="Center" />
 
         <Label Text="Select Ferry" FontSize="Medium" />
-        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry}" HeightRequest="70" />
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedFerry}" HeightRequest="70" />
         <Label Text="{Binding FerryError}" TextColor="Red" IsVisible="{Binding IsFerryErrorVisible}" />
 
         <Label Text="Select Guests" FontSize="Medium" />
-        <CollectionView ItemsSource="{Binding AvailableGuests}" SelectionMode="Multiple" SelectionChanged="OnSelectionChanged">
+        <CollectionView ItemsSource="{Binding AvailableGuests}" SelectionMode="Multiple"
+                        SelectionChanged="OnSelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>

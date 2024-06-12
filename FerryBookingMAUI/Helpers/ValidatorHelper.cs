@@ -6,7 +6,7 @@ namespace FerryBookingMAUI.Helpers
     {
         public static bool TryValidateObject<T>(T obj, out List<ValidationResult> validationResults)
         {
-            var validationContext = new ValidationContext(obj);
+            ValidationContext validationContext = new ValidationContext(obj);
             validationResults = new List<ValidationResult>();
             return Validator.TryValidateObject(obj, validationContext, validationResults, true);
         }

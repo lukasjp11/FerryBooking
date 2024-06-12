@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FerryBookingClassLibrary.Models.Ferry>
 
 @{
-ViewData["Title"] = "Ferry Index";
+    ViewData["Title"] = "Ferry Index";
 }
 
 <h2>Ferries</h2>
@@ -24,18 +24,18 @@ ViewData["Title"] = "Ferry Index";
     <tbody>
     @foreach (var item in Model)
     {
-    <tr>
-        <td>@item.Name</td>
-        <td>@item.Cars.Count / @item.MaxCars</td>
-        <td>@item.Guests.Count / @item.MaxGuests</td>
-        <td>@item.PricePerCar.ToString("C")</td>
-        <td>@item.PricePerGuest.ToString("C")</td>
-        <td>
-            <a class="btn btn-info btn-sm" href="/Ferries/Details/@item.Id">Details</a>
-            <a class="btn btn-warning btn-sm" href="/Ferries/Edit/@item.Id">Edit</a>
-            <a class="btn btn-danger btn-sm" href="/Ferries/Delete/@item.Id">Delete</a>
-        </td>
-    </tr>
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Cars.Count / @item.MaxCars</td>
+            <td>@item.Guests.Count / @item.MaxGuests</td>
+            <td>@item.PricePerCar.ToString("C")</td>
+            <td>@item.PricePerGuest.ToString("C")</td>
+            <td>
+                <a class="btn btn-info btn-sm" href="/Ferries/Details/@item.Id">Details</a>
+                <a class="btn btn-warning btn-sm" href="/Ferries/Edit/@item.Id">Edit</a>
+                <a class="btn btn-danger btn-sm" href="/Ferries/Delete/@item.Id">Delete</a>
+            </td>
+        </tr>
     }
     </tbody>
 </table>

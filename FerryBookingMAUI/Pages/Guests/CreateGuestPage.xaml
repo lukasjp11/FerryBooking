@@ -20,7 +20,8 @@
         <Label Text="{Binding GenderError}" TextColor="Red" IsVisible="{Binding IsGenderErrorVisible}" />
 
         <Label Text="Select Ferry" FontSize="Medium" />
-        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFerry, Mode=TwoWay}" HeightRequest="70" />
+        <Picker Title="Select Ferry" ItemsSource="{Binding Ferries}" ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedFerry, Mode=TwoWay}" HeightRequest="70" />
         <Label Text="{Binding FerryError}" TextColor="Red" IsVisible="{Binding IsFerryErrorVisible}" />
 
         <Button Text="Create" Command="{Binding CreateCommand}" />

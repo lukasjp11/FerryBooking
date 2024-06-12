@@ -1,6 +1,5 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:FerryBookingMAUI.Pages"
              x:Class="FerryBookingMAUI.Pages.Ferries.FerryPage">
     <StackLayout>
         <Label Text="Ferries" FontSize="Large" HorizontalOptions="Center" />
@@ -23,10 +22,16 @@
                         <Label Text="{Binding Name}" FontSize="Medium" WidthRequest="250" />
                         <Label Text="{Binding MaxCars}" FontSize="Medium" WidthRequest="150" />
                         <Label Text="{Binding MaxGuests}" FontSize="Medium" WidthRequest="150" />
-                        <Label Text="{Binding PricePerCar, StringFormat='{}{0} kr.'}" FontSize="Medium" WidthRequest="200" />
-                        <Label Text="{Binding PricePerGuest, StringFormat='{}{0} kr.'}" FontSize="Medium" WidthRequest="200" />
-                        <Button Text="Edit" BackgroundColor="#FFD700" Command="{Binding BindingContext.EditCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
-                        <Button Text="Delete" BackgroundColor="#DC143C" TextColor="White" Command="{Binding BindingContext.DeleteCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                        <Label Text="{Binding PricePerCar, StringFormat='{}{0} kr.'}" FontSize="Medium"
+                               WidthRequest="200" />
+                        <Label Text="{Binding PricePerGuest, StringFormat='{}{0} kr.'}" FontSize="Medium"
+                               WidthRequest="200" />
+                        <Button Text="Edit" BackgroundColor="#FFD700"
+                                Command="{Binding BindingContext.EditCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                CommandParameter="{Binding .}" />
+                        <Button Text="Delete" BackgroundColor="#DC143C" TextColor="White"
+                                Command="{Binding BindingContext.DeleteCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                CommandParameter="{Binding .}" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FerryBookingClassLibrary.Models.Car>
 
 @{
-ViewData["Title"] = "Car Index";
+    ViewData["Title"] = "Car Index";
 }
 
 <h2>Cars</h2>
@@ -21,15 +21,15 @@ ViewData["Title"] = "Car Index";
     <tbody>
     @foreach (var item in Model)
     {
-    <tr>
-        <td>@item.Id</td>
-        <td>@item.Guests.Count</td>
-        <td>
-            <a class="btn btn-info btn-sm" href="/Cars/Details/@item.Id">Details</a>
-            <a class="btn btn-warning btn-sm" href="/Cars/Edit/@item.Id">Edit</a>
-            <a class="btn btn-danger btn-sm" href="/Cars/Delete/@item.Id">Delete</a>
-        </td>
-    </tr>
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Guests.Count</td>
+            <td>
+                <a class="btn btn-info btn-sm" href="/Cars/Details/@item.Id">Details</a>
+                <a class="btn btn-warning btn-sm" href="/Cars/Edit/@item.Id">Edit</a>
+                <a class="btn btn-danger btn-sm" href="/Cars/Delete/@item.Id">Delete</a>
+            </td>
+        </tr>
     }
     </tbody>
 </table>

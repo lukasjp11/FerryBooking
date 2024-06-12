@@ -1,7 +1,7 @@
 ﻿@model FerryBookingClassLibrary.Models.Guest
 
 @{
-ViewData["Title"] = "Guest Details";
+    ViewData["Title"] = "Guest Details";
 }
 
 <h2>Guest Details</h2>
@@ -12,19 +12,25 @@ ViewData["Title"] = "Guest Details";
     </div>
     <div class="card-body">
         <div class="form-group row">
-            <label class="col-sm-3 control-label"><h5>Name:</h5></label>
+            <label class="col-sm-3 control-label">
+                <h5>Name:</h5>
+            </label>
             <div class="col-sm-9">
                 <p class="form-control-static">@Model.Name</p>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-3 control-label"><h5>Gender:</h5></label>
+            <label class="col-sm-3 control-label">
+                <h5>Gender:</h5>
+            </label>
             <div class="col-sm-9">
                 <p class="form-control-static">@(Model.Gender ? "Female" : "Male")</p>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-3 control-label"><h5>Ferry ID:</h5></label>
+            <label class="col-sm-3 control-label">
+                <h5>Ferry ID:</h5>
+            </label>
             <div class="col-sm-9">
                 <p class="form-control-static">@Model.FerryId</p>
             </div>
@@ -37,5 +43,5 @@ ViewData["Title"] = "Guest Details";
 </div>
 
 @section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

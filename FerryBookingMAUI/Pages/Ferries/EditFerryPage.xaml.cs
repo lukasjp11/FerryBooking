@@ -1,10 +1,8 @@
 using FerryBookingClassLibrary.Models;
 using FerryBookingMAUI.Helpers;
 using FerryBookingMAUI.Services;
-using System.Windows.Input;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FerryBookingMAUI.Pages.Ferries
 {
@@ -13,16 +11,27 @@ namespace FerryBookingMAUI.Pages.Ferries
     {
         private readonly FerryService _ferryService;
 
+        private Ferry _ferry;
+
+        public EditFerryPage(FerryService ferryService)
+        {
+            InitializeComponent();
+            _ferryService = ferryService;
+
+            SaveCommand = new Command(async () => await SaveFerry());
+
+            BindingContext = this;
+        }
+
         public int FerryId { get; set; }
 
-        private Ferry _ferry;
         public Ferry Ferry
         {
             get => _ferry;
             set
             {
                 _ferry = value;
-                OnPropertyChanged(nameof(Ferry));
+                OnPropertyChanged();
             }
         }
 
@@ -39,16 +48,6 @@ namespace FerryBookingMAUI.Pages.Ferries
         public bool IsMaxGuestsErrorVisible => !string.IsNullOrEmpty(MaxGuestsError);
         public bool IsPricePerCarErrorVisible => !string.IsNullOrEmpty(PricePerCarError);
         public bool IsPricePerGuestErrorVisible => !string.IsNullOrEmpty(PricePerGuestError);
-
-        public EditFerryPage(FerryService ferryService)
-        {
-            InitializeComponent();
-            _ferryService = ferryService;
-
-            SaveCommand = new Command(async () => await SaveFerry());
-
-            BindingContext = this;
-        }
 
         protected override async void OnAppearing()
         {
@@ -72,13 +71,16 @@ namespace FerryBookingMAUI.Pages.Ferries
 
         private bool ValidateFerry()
         {
-            var isValid = ValidatorHelper.TryValidateObject(Ferry, out var validationResults);
+            bool isValid = ValidatorHelper.TryValidateObject(Ferry, out List<ValidationResult> validationResults);
 
             NameError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.Name)))?.ErrorMessage;
             MaxCarsError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.MaxCars)))?.ErrorMessage;
-            MaxGuestsError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.MaxGuests)))?.ErrorMessage;
-            PricePerCarError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.PricePerCar)))?.ErrorMessage;
-            PricePerGuestError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.PricePerGuest)))?.ErrorMessage;
+            MaxGuestsError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.MaxGuests)))
+                ?.ErrorMessage;
+            PricePerCarError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.PricePerCar)))
+                ?.ErrorMessage;
+            PricePerGuestError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Ferry.PricePerGuest)))
+                ?.ErrorMessage;
 
             OnPropertyChanged(nameof(NameError));
             OnPropertyChanged(nameof(MaxCarsError));

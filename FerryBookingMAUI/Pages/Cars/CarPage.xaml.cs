@@ -9,23 +9,23 @@ namespace FerryBookingMAUI.Pages.Cars
     {
         private readonly CarService _carService;
 
-        public ObservableCollection<Car> Cars { get; set; } = new ObservableCollection<Car>();
-
-        public ICommand CreateCarCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand DeleteCommand { get; }
-
         public CarPage(CarService carService)
         {
             InitializeComponent();
             _carService = carService;
 
             CreateCarCommand = new Command(async () => await CreateCar());
-            EditCommand = new Command<Car>(async (car) => await EditCar(car));
-            DeleteCommand = new Command<Car>(async (car) => await DeleteCar(car));
+            EditCommand = new Command<Car>(async car => await EditCar(car));
+            DeleteCommand = new Command<Car>(async car => await DeleteCar(car));
 
             BindingContext = this;
         }
+
+        public ObservableCollection<Car> Cars { get; set; } = new();
+
+        public ICommand CreateCarCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         protected override async void OnAppearing()
         {
@@ -35,9 +35,9 @@ namespace FerryBookingMAUI.Pages.Cars
 
         private async Task LoadCars()
         {
-            var cars = await _carService.GetCarsAsync();
+            IEnumerable<Car> cars = await _carService.GetCarsAsync();
             Cars.Clear();
-            foreach (var car in cars)
+            foreach (Car car in cars)
             {
                 Cars.Add(car);
             }

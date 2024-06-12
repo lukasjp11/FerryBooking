@@ -2,48 +2,59 @@ using FerryBookingClassLibrary.Models;
 using FerryBookingMAUI.Helpers;
 using FerryBookingMAUI.Services;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FerryBookingMAUI.Pages.Guests
 {
     [QueryProperty(nameof(GuestId), nameof(GuestId))]
     public partial class EditGuestPage : ContentPage
     {
-        private readonly GuestService _guestService;
         private readonly FerryService _ferryService;
+        private readonly GuestService _guestService;
+
+        private Guest _guest = new();
+
+        private Ferry _selectedFerry;
+
+        private string _selectedGender;
+
+        public EditGuestPage(GuestService guestService, FerryService ferryService)
+        {
+            InitializeComponent();
+            _guestService = guestService;
+            _ferryService = ferryService;
+
+            SaveCommand = new Command(async () => await SaveGuest());
+
+            BindingContext = this;
+        }
 
         public int GuestId { get; set; }
 
-        private Guest _guest = new Guest();
         public Guest Guest
         {
             get => _guest;
             set
             {
                 _guest = value;
-                OnPropertyChanged(nameof(Guest));
+                OnPropertyChanged();
                 SelectedGender = _guest.Gender ? "Female" : "Male";
             }
         }
 
-        public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
+        public ObservableCollection<Ferry> Ferries { get; set; } = new();
 
-        private Ferry _selectedFerry;
         public Ferry SelectedFerry
         {
             get => _selectedFerry;
             set
             {
                 _selectedFerry = value;
-                OnPropertyChanged(nameof(SelectedFerry));
+                OnPropertyChanged();
             }
         }
 
-        private string _selectedGender;
         public string SelectedGender
         {
             get => _selectedGender;
@@ -51,7 +62,7 @@ namespace FerryBookingMAUI.Pages.Guests
             {
                 _selectedGender = value;
                 Guest.Gender = _selectedGender == "Female";
-                OnPropertyChanged(nameof(SelectedGender));
+                OnPropertyChanged();
             }
         }
 
@@ -65,17 +76,6 @@ namespace FerryBookingMAUI.Pages.Guests
         public bool IsGenderErrorVisible => !string.IsNullOrEmpty(GenderError);
         public bool IsFerryErrorVisible => !string.IsNullOrEmpty(FerryError);
 
-        public EditGuestPage(GuestService guestService, FerryService ferryService)
-        {
-            InitializeComponent();
-            _guestService = guestService;
-            _ferryService = ferryService;
-
-            SaveCommand = new Command(async () => await SaveGuest());
-
-            BindingContext = this;
-        }
-
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -85,9 +85,9 @@ namespace FerryBookingMAUI.Pages.Guests
 
         private async Task LoadFerries()
         {
-            var ferries = await _ferryService.GetFerriesAsync();
+            IEnumerable<Ferry> ferries = await _ferryService.GetFerriesAsync();
             Ferries.Clear();
-            foreach (var ferry in ferries)
+            foreach (Ferry ferry in ferries)
             {
                 Ferries.Add(ferry);
             }
@@ -121,7 +121,7 @@ namespace FerryBookingMAUI.Pages.Guests
 
         private bool ValidateGuest()
         {
-            var isValid = ValidatorHelper.TryValidateObject(Guest, out var validationResults);
+            bool isValid = ValidatorHelper.TryValidateObject(Guest, out List<ValidationResult> validationResults);
 
             NameError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Guest.Name)))?.ErrorMessage;
             GenderError = validationResults.Find(vr => vr.MemberNames.Contains(nameof(Guest.Gender)))?.ErrorMessage;

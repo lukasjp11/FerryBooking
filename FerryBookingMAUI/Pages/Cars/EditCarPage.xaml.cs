@@ -1,9 +1,6 @@
 using FerryBookingClassLibrary.Models;
 using FerryBookingMAUI.Services;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FerryBookingMAUI.Pages.Cars
@@ -15,36 +12,7 @@ namespace FerryBookingMAUI.Pages.Cars
         private readonly FerryService _ferryService;
         private readonly GuestService _guestService;
 
-        public int CarId { get; set; }
-
-        public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
-        public ObservableCollection<Guest> AvailableGuests { get; set; } = new ObservableCollection<Guest>();
-
         private Ferry _selectedFerry;
-        public Ferry SelectedFerry
-        {
-            get => _selectedFerry;
-            set
-            {
-                _selectedFerry = value;
-                OnPropertyChanged();
-                if (_selectedFerry != null)
-                {
-                    _ = UpdateAvailableGuests();
-                }
-                ValidateSelectedFerry();
-            }
-        }
-
-        public ObservableCollection<Guest> SelectedGuests { get; set; } = new ObservableCollection<Guest>();
-
-        public ICommand SaveCommand { get; }
-
-        public string FerryError { get; set; }
-        public bool IsFerryErrorVisible => !string.IsNullOrEmpty(FerryError);
-
-        public string GuestsError { get; set; }
-        public bool IsGuestsErrorVisible => !string.IsNullOrEmpty(GuestsError);
 
         public EditCarPage(CarService carService, FerryService ferryService, GuestService guestService)
         {
@@ -58,6 +26,37 @@ namespace FerryBookingMAUI.Pages.Cars
             BindingContext = this;
         }
 
+        public int CarId { get; set; }
+
+        public ObservableCollection<Ferry> Ferries { get; set; } = new();
+        public ObservableCollection<Guest> AvailableGuests { get; set; } = new();
+
+        public Ferry SelectedFerry
+        {
+            get => _selectedFerry;
+            set
+            {
+                _selectedFerry = value;
+                OnPropertyChanged();
+                if (_selectedFerry != null)
+                {
+                    _ = UpdateAvailableGuests();
+                }
+
+                ValidateSelectedFerry();
+            }
+        }
+
+        public ObservableCollection<Guest> SelectedGuests { get; set; } = new();
+
+        public ICommand SaveCommand { get; }
+
+        public string FerryError { get; set; }
+        public bool IsFerryErrorVisible => !string.IsNullOrEmpty(FerryError);
+
+        public string GuestsError { get; set; }
+        public bool IsGuestsErrorVisible => !string.IsNullOrEmpty(GuestsError);
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -66,19 +65,19 @@ namespace FerryBookingMAUI.Pages.Cars
 
         private async Task LoadData()
         {
-            var ferries = await _ferryService.GetFerriesAsync();
+            IEnumerable<Ferry> ferries = await _ferryService.GetFerriesAsync();
             Ferries.Clear();
-            foreach (var ferry in ferries)
+            foreach (Ferry ferry in ferries)
             {
                 Ferries.Add(ferry);
             }
 
-            var car = await _carService.GetCarByIdAsync(CarId);
+            Car? car = await _carService.GetCarByIdAsync(CarId);
             if (car != null)
             {
                 SelectedFerry = Ferries.FirstOrDefault(f => f.Id == car.FerryId);
                 SelectedGuests.Clear();
-                foreach (var guest in car.Guests)
+                foreach (Guest guest in car.Guests)
                 {
                     SelectedGuests.Add(guest);
                 }
@@ -89,15 +88,19 @@ namespace FerryBookingMAUI.Pages.Cars
 
         private async Task UpdateAvailableGuests()
         {
-            if (SelectedFerry == null) return;
+            if (SelectedFerry == null)
+            {
+                return;
+            }
 
-            var guests = await _guestService.GetGuestsByFerryAsync(SelectedFerry.Id);
-            var cars = await _carService.GetCarsAsync();
+            IEnumerable<Guest> guests = await _guestService.GetGuestsByFerryAsync(SelectedFerry.Id);
+            IEnumerable<Car> cars = await _carService.GetCarsAsync();
 
-            var assignedGuests = cars.Where(c => c.Id != CarId).SelectMany(car => car.Guests).Select(g => g.Id).ToHashSet();
+            HashSet<int> assignedGuests = cars.Where(c => c.Id != CarId).SelectMany(car => car.Guests).Select(g => g.Id)
+                .ToHashSet();
 
             AvailableGuests.Clear();
-            foreach (var guest in guests)
+            foreach (Guest guest in guests)
             {
                 if (!assignedGuests.Contains(guest.Id) || SelectedGuests.Any(g => g.Id == guest.Id))
                 {
@@ -118,12 +121,7 @@ namespace FerryBookingMAUI.Pages.Cars
                 return;
             }
 
-            var car = new Car
-            {
-                Id = CarId,
-                FerryId = SelectedFerry.Id,
-                Guests = SelectedGuests.ToList()
-            };
+            Car car = new Car { Id = CarId, FerryId = SelectedFerry.Id, Guests = SelectedGuests.ToList() };
 
             await _carService.UpdateCarAsync(CarId, car);
             await Navigation.PopAsync();
@@ -132,7 +130,7 @@ namespace FerryBookingMAUI.Pages.Cars
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectedGuests.Clear();
-            foreach (var item in e.CurrentSelection)
+            foreach (object? item in e.CurrentSelection)
             {
                 SelectedGuests.Add(item as Guest);
             }

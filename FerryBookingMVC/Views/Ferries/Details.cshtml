@@ -1,7 +1,7 @@
 ﻿@model FerryBookingClassLibrary.Models.Ferry
 
 @{
-ViewData["Title"] = "Ferry Details";
+    ViewData["Title"] = "Ferry Details";
 }
 
 <h2>Ferry Details</h2>
@@ -73,17 +73,17 @@ ViewData["Title"] = "Ferry Details";
             <tbody>
             @foreach (var car in Model.Cars)
             {
-            <tr>
-                <td>@car.Id</td>
-                <td>
-                    <ul class="list-unstyled">
-                        @foreach (var guest in car.Guests)
-                        {
-                        <li>@guest.Name</li>
-                        }
-                    </ul>
-                </td>
-            </tr>
+                <tr>
+                    <td>@car.Id</td>
+                    <td>
+                        <ul class="list-unstyled">
+                            @foreach (var guest in car.Guests)
+                            {
+                                <li>@guest.Name</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
             }
             </tbody>
         </table>
@@ -91,7 +91,7 @@ ViewData["Title"] = "Ferry Details";
         <ul class="list-group mt-3">
             @foreach (var guest in Model.Guests.Except(Model.Cars.SelectMany(c => c.Guests)))
             {
-            <li class="list-group-item">@guest.Name</li>
+                <li class="list-group-item">@guest.Name</li>
             }
         </ul>
     </div>

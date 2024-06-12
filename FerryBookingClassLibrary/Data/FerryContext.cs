@@ -1,12 +1,11 @@
 ﻿using FerryBookingClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace FerryBookingClassLibrary.Data
 {
-    public class FerryContext : Microsoft.EntityFrameworkCore.DbContext
+    public class FerryContext : DbContext
     {
-        public FerryContext() { }
-
         public DbSet<Ferry> Ferries { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Guest> Guests { get; set; }
@@ -15,7 +14,8 @@ namespace FerryBookingClassLibrary.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=FerryDB;User Id=sa;Password=Rbj93zpj!;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(
+                    "Server=localhost,1433;Database=FerryDB;User Id=sa;Password=Rbj93zpj!;TrustServerCertificate=True;");
             }
         }
 
@@ -62,28 +62,29 @@ namespace FerryBookingClassLibrary.Data
 
         public override int SaveChanges()
         {
-            var deletedEntries = ChangeTracker.Entries()
+            List<EntityEntry> deletedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Deleted && (e.Entity is Ferry || e.Entity is Car))
                 .ToList();
 
-            foreach (var entry in deletedEntries)
+            foreach (EntityEntry entry in deletedEntries)
             {
                 if (entry.Entity is Ferry ferry)
                 {
-                    var guests = Guests.Where(g => g.FerryId == ferry.Id).ToList();
+                    List<Guest> guests = Guests.Where(g => g.FerryId == ferry.Id).ToList();
                     Guests.RemoveRange(guests);
 
-                    var cars = Cars.Where(c => c.FerryId == ferry.Id).ToList();
-                    foreach (var car in cars)
+                    List<Car> cars = Cars.Where(c => c.FerryId == ferry.Id).ToList();
+                    foreach (Car car in cars)
                     {
-                        var carGuests = Guests.Where(g => g.FerryId == car.FerryId).ToList();
+                        List<Guest> carGuests = Guests.Where(g => g.FerryId == car.FerryId).ToList();
                         Guests.RemoveRange(carGuests);
                     }
+
                     Cars.RemoveRange(cars);
                 }
                 else if (entry.Entity is Car car)
                 {
-                    var guests = Guests.Where(g => g.FerryId == car.FerryId).ToList();
+                    List<Guest> guests = Guests.Where(g => g.FerryId == car.FerryId).ToList();
                     Guests.RemoveRange(guests);
                 }
             }

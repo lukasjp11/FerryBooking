@@ -2,9 +2,6 @@
 using FerryBookingClassLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FerryBookingAPI.Controllers
 {
@@ -34,7 +31,7 @@ namespace FerryBookingAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Ferry>> GetFerry(int id)
         {
-            var ferry = await _context.Ferries
+            Ferry? ferry = await _context.Ferries
                 .Include(f => f.Cars)
                 .ThenInclude(c => c.Guests)
                 .Include(f => f.Guests)
@@ -69,10 +66,8 @@ namespace FerryBookingAPI.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return NoContent();
@@ -92,7 +87,7 @@ namespace FerryBookingAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFerry(int id)
         {
-            var ferry = await _context.Ferries
+            Ferry? ferry = await _context.Ferries
                 .Include(f => f.Cars)
                 .ThenInclude(c => c.Guests)
                 .Include(f => f.Guests)

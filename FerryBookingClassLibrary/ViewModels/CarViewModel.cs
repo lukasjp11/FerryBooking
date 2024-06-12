@@ -8,13 +8,11 @@ namespace FerryBookingClassLibrary.ViewModels
 
         [Required]
         [Display(Name = "Number of Guests")]
-        public List<int> SelectedGuestIds { get; set; } = new List<int>();
+        public List<int> SelectedGuestIds { get; set; } = new();
 
-        [Required]
-        [Display(Name = "Ferry")]
-        public int FerryId { get; set; }
+        [Required] [Display(Name = "Ferry")] public int FerryId { get; set; }
 
         public string? FerryName { get; set; }
-        public List<string> GuestNames { get; set; } = new List<string>();
+        public List<string> GuestNames { get; set; } = new();
     }
 }

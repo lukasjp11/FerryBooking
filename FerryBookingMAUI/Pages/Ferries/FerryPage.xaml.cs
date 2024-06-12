@@ -1,7 +1,6 @@
 using FerryBookingClassLibrary.Models;
 using FerryBookingMAUI.Services;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace FerryBookingMAUI.Pages.Ferries
@@ -10,23 +9,23 @@ namespace FerryBookingMAUI.Pages.Ferries
     {
         private readonly FerryService _ferryService;
 
-        public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>();
-
-        public ICommand CreateFerryCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand DeleteCommand { get; }
-
         public FerryPage(FerryService ferryService)
         {
             InitializeComponent();
             _ferryService = ferryService;
 
             CreateFerryCommand = new Command(async () => await CreateFerry());
-            EditCommand = new Command<Ferry>(async (ferry) => await EditFerry(ferry));
-            DeleteCommand = new Command<Ferry>(async (ferry) => await DeleteFerry(ferry));
+            EditCommand = new Command<Ferry>(async ferry => await EditFerry(ferry));
+            DeleteCommand = new Command<Ferry>(async ferry => await DeleteFerry(ferry));
 
             BindingContext = this;
         }
+
+        public ObservableCollection<Ferry> Ferries { get; set; } = new();
+
+        public ICommand CreateFerryCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         protected override async void OnAppearing()
         {
@@ -36,9 +35,9 @@ namespace FerryBookingMAUI.Pages.Ferries
 
         private async Task LoadFerries()
         {
-            var ferries = await _ferryService.GetFerriesAsync();
+            IEnumerable<Ferry> ferries = await _ferryService.GetFerriesAsync();
             Ferries.Clear();
-            foreach (var ferry in ferries)
+            foreach (Ferry ferry in ferries)
             {
                 Ferries.Add(ferry);
             }

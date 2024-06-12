@@ -1,6 +1,4 @@
-using System;
 using System.Globalization;
-using Microsoft.Maui.Controls;
 
 namespace FerryBookingMAUI.Converters
 {
@@ -12,6 +10,7 @@ namespace FerryBookingMAUI.Converters
             {
                 return gender ? "Female" : "Male";
             }
+
             return "Unknown";
         }
 

@@ -9,23 +9,23 @@ namespace FerryBookingMAUI.Pages.Guests
     {
         private readonly GuestService _guestService;
 
-        public ObservableCollection<Guest> Guests { get; set; } = new ObservableCollection<Guest>();
-
-        public ICommand CreateGuestCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand DeleteCommand { get; }
-
         public GuestPage(GuestService guestService)
         {
             InitializeComponent();
             _guestService = guestService;
 
             CreateGuestCommand = new Command(async () => await CreateGuest());
-            EditCommand = new Command<Guest>(async (guest) => await EditGuest(guest));
-            DeleteCommand = new Command<Guest>(async (guest) => await DeleteGuest(guest));
+            EditCommand = new Command<Guest>(async guest => await EditGuest(guest));
+            DeleteCommand = new Command<Guest>(async guest => await DeleteGuest(guest));
 
             BindingContext = this;
         }
+
+        public ObservableCollection<Guest> Guests { get; set; } = new();
+
+        public ICommand CreateGuestCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         protected override async void OnAppearing()
         {
@@ -35,9 +35,9 @@ namespace FerryBookingMAUI.Pages.Guests
 
         private async Task LoadGuests()
         {
-            var guests = await _guestService.GetGuestsAsync();
+            IEnumerable<Guest> guests = await _guestService.GetGuestsAsync();
             Guests.Clear();
-            foreach (var guest in guests)
+            foreach (Guest guest in guests)
             {
                 Guests.Add(guest);
             }

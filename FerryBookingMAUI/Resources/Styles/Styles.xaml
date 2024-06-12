@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <?xaml-comp compile="true" ?>
+
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
@@ -12,12 +13,12 @@
     <Style TargetType="Button">
         <Setter Property="TextColor" Value="{StaticResource OnPrimary}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-        <Setter Property="FontFamily" Value="OpenSansSemiBold"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}"/>
-        <Setter Property="CornerRadius" Value="8"/>
-        <Setter Property="Padding" Value="14,10"/>
-        <Setter Property="Margin" Value="{StaticResource PaddingSmall}"/>
-        <Setter Property="MinimumHeightRequest" Value="44"/>
+        <Setter Property="FontFamily" Value="OpenSansSemiBold" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Margin" Value="{StaticResource PaddingSmall}" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -43,40 +44,40 @@
         <Setter Property="TextColor" Value="{StaticResource OnBackground}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
-        <Setter Property="Margin" Value="{StaticResource PaddingSmall}"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingSmall}" />
     </Style>
 
     <!-- Headline Style -->
     <Style TargetType="Label" x:Key="Headline">
         <Setter Property="TextColor" Value="{StaticResource OnBackground}" />
         <Setter Property="FontSize" Value="{StaticResource FontSizeXXLarge}" />
-        <Setter Property="FontFamily" Value="OpenSansBold"/>
+        <Setter Property="FontFamily" Value="OpenSansBold" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="Margin" Value="{StaticResource PaddingMedium}"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingMedium}" />
     </Style>
 
     <!-- SubHeadline Style -->
     <Style TargetType="Label" x:Key="SubHeadline">
         <Setter Property="TextColor" Value="{StaticResource OnBackground}" />
         <Setter Property="FontSize" Value="{StaticResource FontSizeXLarge}" />
-        <Setter Property="FontFamily" Value="OpenSansSemiBold"/>
+        <Setter Property="FontFamily" Value="OpenSansSemiBold" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="Margin" Value="{StaticResource PaddingMedium}"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingMedium}" />
     </Style>
 
     <!-- Entry Style -->
     <Style TargetType="Entry">
         <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
         <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
-        <Setter Property="Margin" Value="{StaticResource PaddingSmall}"/>
-        <Setter Property="HeightRequest" Value="40"/>
-        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingSmall}" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
     <!-- Frame Style -->
@@ -86,7 +87,7 @@
         <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="Padding" Value="{StaticResource PaddingLarge}" />
-        <Setter Property="Margin" Value="{StaticResource PaddingMedium}"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingMedium}" />
     </Style>
 
     <!-- CollectionView Style -->
@@ -103,17 +104,17 @@
     <Style TargetType="ListView">
         <Setter Property="SeparatorColor" Value="{StaticResource Gray200}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
-        <Setter Property="Margin" Value="{StaticResource PaddingMedium}"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingMedium}" />
     </Style>
 
     <!-- Picker Style -->
     <Style TargetType="Picker">
         <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}"/>
-        <Setter Property="Margin" Value="{StaticResource PaddingSmall}"/>
-        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
+        <Setter Property="Margin" Value="{StaticResource PaddingSmall}" />
+        <Setter Property="HeightRequest" Value="40" />
     </Style>
 
     <!-- ProgressBar Style -->
@@ -129,19 +130,19 @@
 
     <!-- Entry Border Style -->
     <Style TargetType="Frame" x:Key="EntryBorderStyle">
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="BorderColor" Value="{StaticResource Primary}"/>
-        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
 
     <!-- Common Card Style -->
     <Style TargetType="Frame" x:Key="CardStyle">
-        <Setter Property="Padding" Value="{StaticResource PaddingMedium}"/>
-        <Setter Property="CornerRadius" Value="15"/>
-        <Setter Property="HasShadow" Value="True"/>
-        <Setter Property="Margin" Value="{StaticResource PaddingMedium}"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource Surface}"/>
+        <Setter Property="Padding" Value="{StaticResource PaddingMedium}" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="Margin" Value="{StaticResource PaddingMedium}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
     </Style>
 
     <!-- SearchBar Style -->
@@ -151,8 +152,8 @@
         <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
-        <Setter Property="Margin" Value="{StaticResource PaddingSmall}"/>
-        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="Margin" Value="{StaticResource PaddingSmall}" />
+        <Setter Property="HeightRequest" Value="40" />
     </Style>
 
     <!-- Shell Style -->
@@ -180,16 +181,16 @@
     </Style>
 
     <!-- Picker Style -->
-    
+
 
     <!-- Frame Style for Picker -->
     <Style x:Key="PickerFrameStyle" TargetType="Frame">
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="BorderColor" Value="{StaticResource Primary}"/>
-        <Setter Property="BackgroundColor" Value="Transparent"/>
-        <Setter Property="HeightRequest" Value="50"/>
-        <Setter Property="WidthRequest" Value="300"/>
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="WidthRequest" Value="300" />
     </Style>
 
 </ResourceDictionary>

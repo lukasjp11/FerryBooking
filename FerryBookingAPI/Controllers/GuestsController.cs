@@ -2,9 +2,6 @@
 using FerryBookingClassLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FerryBookingAPI.Controllers
 {
@@ -30,7 +27,7 @@ namespace FerryBookingAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Guest>> GetGuest(int id)
         {
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
+            Guest? guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
             {
                 return NotFound();
@@ -60,10 +57,8 @@ namespace FerryBookingAPI.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return NoContent();
@@ -83,7 +78,7 @@ namespace FerryBookingAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGuest(int id)
         {
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
+            Guest? guest = await _context.Guests.FirstOrDefaultAsync(m => m.Id == id);
             if (guest == null)
             {
                 return NotFound();

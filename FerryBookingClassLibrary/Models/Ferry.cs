@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace FerryBookingClassLibrary.Models
@@ -26,9 +23,9 @@ namespace FerryBookingClassLibrary.Models
         [Range(0, int.MaxValue, ErrorMessage = "Price per Guest must be a non-negative number.")]
         public int PricePerCar { get; set; } = 197;
 
-        [JsonIgnore]
-        public List<Car> Cars { get; set; } = new List<Car>();
-        public List<Guest> Guests { get; set; } = new List<Guest>();
+        [JsonIgnore] public List<Car> Cars { get; set; } = new();
+
+        public List<Guest> Guests { get; set; } = new();
 
         public int CalculateTotalPrice()
         {
