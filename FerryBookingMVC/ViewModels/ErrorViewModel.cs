@@ -1,4 +1,4 @@
-namespace FerryBookingMVC.Models
+namespace FerryBookingMVC.ViewModels
 {
     public class ErrorViewModel
     {
